@@ -28,7 +28,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     private static final String CONTINUE = "Continue";
     private static final String RESTART = "Restart";
-    private static final String EXIT = "Exit";
+    private static final String MAINMENU = "Main Menu";
     private static final String PAUSE = "Pause Menu";
     private static final int TEXT_SIZE = 30;
     private static final Color MENU_COLOR = new Color(0,255,0);
@@ -50,18 +50,21 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private Font menuFont;
 
     private Rectangle continueButtonRect;
-    private Rectangle exitButtonRect;
+    private Rectangle MainMenuButtonRect;
     private Rectangle restartButtonRect;
     private int strLen;
+    private GameFrame owner;
 
     private DebugConsole debugConsole;
 
 
-    public GameBoard(JFrame owner){
-        super();
+    public GameBoard(GameFrame owner){
 
+        super();
+        this.owner=owner;
         strLen = 0;
         showPauseMenu = false;
+
 
 
 
@@ -250,12 +253,12 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         y *= 3.0/2;
 
-        if(exitButtonRect == null){
-            exitButtonRect = (Rectangle) continueButtonRect.clone();
-            exitButtonRect.setLocation(x,y-exitButtonRect.height);
+        if(MainMenuButtonRect == null){
+            MainMenuButtonRect = (Rectangle) continueButtonRect.clone();
+            MainMenuButtonRect.setLocation(x,y-MainMenuButtonRect.height);
         }
 
-        g2d.drawString(EXIT,x,y);
+        g2d.drawString(MAINMENU,x,y);
 
 
 
@@ -317,8 +320,11 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
             showPauseMenu = false;
             repaint();
         }
-        else if(exitButtonRect.contains(p)){
-            System.exit(0);
+        else if(MainMenuButtonRect.contains(p)){
+            //System.exit(0);
+            showPauseMenu =false;
+            owner.enableHomeMenu();
+
         }
 
     }
@@ -351,8 +357,8 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
-        if(exitButtonRect != null && showPauseMenu) {
-            if (exitButtonRect.contains(p) || continueButtonRect.contains(p) || restartButtonRect.contains(p))
+        if(MainMenuButtonRect != null && showPauseMenu) {
+            if (MainMenuButtonRect.contains(p) || continueButtonRect.contains(p) || restartButtonRect.contains(p))
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             else
                 this.setCursor(Cursor.getDefaultCursor());
