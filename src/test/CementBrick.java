@@ -34,7 +34,7 @@ public class CementBrick extends Brick {
             return false;
         super.impact();
         if(!super.isBroken()){
-            crack.makeCrack(point,dir);
+            crack.makeCrack(brickFace,point,dir);
             updateBrick();
             return false;
         }

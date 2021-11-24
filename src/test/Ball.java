@@ -39,7 +39,6 @@ abstract public class Ball {
         left.setLocation(center.getX()-(radiusA /2),center.getY());
         right.setLocation(center.getX()+(radiusA /2),center.getY());
 
-
         ballFace = makeBall(center,radiusA,radiusB);
         this.border = border;
         this.inner  = inner;

@@ -32,7 +32,6 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
     private boolean startClicked;
     private boolean backClicked;
 
-    private Font buttonFont;
     private Font instructionFont;
 
 

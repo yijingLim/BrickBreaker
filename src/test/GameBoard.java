@@ -21,7 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
-
+import java.awt.geom.Rectangle2D;
 
 
 public class GameBoard extends JComponent implements KeyListener,MouseListener,MouseMotionListener {
@@ -44,10 +44,16 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private Wall wall;
 
     private String message;
+    private String Level;
+    private String Start;
 
     private boolean showPauseMenu;
 
     private Font menuFont;
+    private Font LevelBarFont;
+    private Font StartFont;
+    private Rectangle PauseButton;
+    private boolean PauseClicked;
 
     private Rectangle continueButtonRect;
     private Rectangle MainMenuButtonRect;
@@ -58,6 +64,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private DebugConsole debugConsole;
 
 
+
     public GameBoard(GameFrame owner){
 
         super();
@@ -65,24 +72,29 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         strLen = 0;
         showPauseMenu = false;
 
-
-
-
         menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
-
+        LevelBarFont = new Font("Noto Mono",Font.BOLD,25);
+        StartFont = new Font("Noto Mono",Font.BOLD,30);
 
         this.initialize();
         message = "";
-        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2,new Point(300,430));
+        Start = "Enter to Start";
+        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2,new Point(300,380));
 
         debugConsole = new DebugConsole(owner,wall,this);
+
         //initialize the first level
         wall.nextLevel();
+        Level = String.format("Level %d", wall.getLevelCount());
 
         gameTimer = new Timer(10,e ->{
+
             wall.move();
             wall.findImpacts();
+            Start = "";
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),wall.getBallCount());
+            Level = String.format("Level %d", wall.getLevelCount());
+
             if(wall.isBallLost()){
                 if(wall.ballEnd()){
                     wall.wallReset();
@@ -98,6 +110,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                     wall.ballReset();
                     wall.wallReset();
                     wall.nextLevel();
+
                 }
                 else{
                     message = "ALL WALLS DESTROYED";
@@ -128,9 +141,6 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         clear(g2d);
 
-        g2d.setColor(Color.BLUE);
-        g2d.drawString(message,250,225);
-
         drawBall(wall.ball,g2d);
 
         for(Brick b : wall.bricks)
@@ -138,6 +148,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                 drawBrick(b,g2d);
 
         drawPlayer(wall.player,g2d);
+        drawLevelBar(g2d);
+        drawPauseButton(g2d);
+
 
         if(showPauseMenu)
             drawMenu(g2d);
@@ -190,6 +203,45 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         g2d.draw(s);
 
         g2d.setColor(tmp);
+        g2d.drawString(Start, 270, 360);
+
+    }
+    private void drawLevelBar(Graphics2D g2d){//putting game board on the below of the page
+
+        g2d.setColor(Color.blue);
+        Stroke stroke1 = new BasicStroke(2f);
+        g2d.setStroke(stroke1);
+
+        g2d.setColor(Color.black);
+        g2d.fillRect(0, 400, 630, 50);
+
+        g2d.setColor(Color.BLUE);
+        g2d.setFont(LevelBarFont);
+        g2d.drawString(message,200,435);
+        g2d.drawString(Level ,20,435);
+
+        g2d.setColor(Color.BLUE);
+        drawPauseButton(g2d);
+
+    }
+    private void drawPauseButton(Graphics2D g2d){
+        Dimension btnDim = new Dimension(DEF_WIDTH/6, DEF_HEIGHT/13);
+        PauseButton = new Rectangle(btnDim);
+        PauseButton.setLocation(470, 410);
+
+        if(PauseClicked){
+            Color tmp = g2d.getColor();
+            g2d.setColor(Color.WHITE.brighter());
+            g2d.draw(PauseButton);
+            g2d.setColor(Color.white);
+            g2d.drawString("PAUSE",475,435);
+            g2d.setColor(tmp);
+        }
+        else{
+            g2d.draw(PauseButton);
+            g2d.drawString("PAUSE",475,435);
+        }
+
     }
 
     private void drawMenu(Graphics2D g2d){
@@ -307,6 +359,12 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
+        if(PauseButton.contains(p)){
+            showPauseMenu = !showPauseMenu;
+            repaint();
+            gameTimer.stop();
+        }
+
         if(!showPauseMenu)
             return;
         if(continueButtonRect.contains(p)){
@@ -331,11 +389,21 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
+        Point p = mouseEvent.getPoint();
+        if(PauseButton.contains(p)){
+            PauseClicked = true;
+            repaint(PauseButton.x,PauseButton.y,PauseButton.width+1,PauseButton.height+1);
+
+        }
 
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
+        if(PauseClicked){
+            PauseClicked = false;
+            repaint(PauseButton.x,PauseButton.y,PauseButton.width+1,PauseButton.height+1);
+        }
 
     }
 
