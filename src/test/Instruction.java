@@ -35,6 +35,10 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
     private Font instructionFont;
 
 
+    /**
+     * @param owner
+     * Instruction class to displau instruction and information before game
+     */
     public Instruction(GameFrame owner){
         instructionFont = new Font("TimesRoman",Font.CENTER_BASELINE,TEXT_SIZE);
 

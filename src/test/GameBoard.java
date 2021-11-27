@@ -91,6 +91,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
             wall.move();
             wall.findImpacts();
+            wall.findImpacts1();
             Start = "";
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),wall.getBallCount());
             Level = String.format("Level %d", wall.getLevelCount());
@@ -124,7 +125,6 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     }
 
 
-
     private void initialize(){
         this.setPreferredSize(new Dimension(DEF_WIDTH,DEF_HEIGHT));
         this.setFocusable(true);
@@ -142,6 +142,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         clear(g2d);
 
         drawBall(wall.ball,g2d);
+        if (wall.getLevelCount() == 5) { //2 balls in level 5
+            drawBall(wall.extraball, g2d);// the extra ball
+        }
 
         for(Brick b : wall.bricks)
             if(!b.isBroken())
@@ -149,6 +152,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         drawPlayer(wall.player,g2d);
         drawLevelBar(g2d);
+
         drawPauseButton(g2d);
 
 
