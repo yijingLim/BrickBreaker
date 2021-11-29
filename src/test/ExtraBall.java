@@ -20,6 +20,8 @@ public class ExtraBall extends Ball {
     }
 
 
+
+
     @Override
     protected Shape makeBall(Point2D center, int radiusA, int radiusB) {
 

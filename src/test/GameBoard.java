@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 
 public class GameBoard extends JComponent implements KeyListener,MouseListener,MouseMotionListener {
@@ -31,13 +32,13 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private static final String MAINMENU = "Main Menu";
     private static final String PAUSE = "Pause Menu";
     private static final int TEXT_SIZE = 30;
-    private static final Color MENU_COLOR = new Color(0,255,0);
+    private static final Color MENU_COLOR = new Color(10, 209, 245);
 
 
     private static final int DEF_WIDTH = 600;
-    private static final int DEF_HEIGHT = 450;
+    public static final int DEF_HEIGHT = 450;
 
-    private static final Color BG_COLOR = Color.WHITE;
+    private static final Color BG_COLOR = new Color(244, 244, 245);
 
     private Timer gameTimer;
 
@@ -91,7 +92,11 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
             wall.move();
             wall.findImpacts();
+
             wall.findImpacts1();
+            wall.PowerDropDown();
+
+
             Start = "";
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),wall.getBallCount());
             Level = String.format("Level %d", wall.getLevelCount());
@@ -142,8 +147,13 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         clear(g2d);
 
         drawBall(wall.ball,g2d);
-        if (wall.getLevelCount() == 5) { //2 balls in level 5
-            drawBall(wall.extraball, g2d);// the extra ball
+        if (wall.getLevelCount() == 1) { //2 balls in level 5
+            int i;
+            for (i=0; i<wall.extraball.length; i++) {
+                if(wall.extraball[i]!=null){
+                    drawBall(wall.extraball[i], g2d);// the extra ball
+                }
+            }
         }
 
         for(Brick b : wall.bricks)
@@ -152,6 +162,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         drawPlayer(wall.player,g2d);
         drawLevelBar(g2d);
+        wall.drawSpecialCharacteristic(g2d);
 
         drawPauseButton(g2d);
 
@@ -210,6 +221,8 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         g2d.drawString(Start, 270, 360);
 
     }
+
+
     private void drawLevelBar(Graphics2D g2d){//putting game board on the below of the page
 
         g2d.setColor(Color.blue);

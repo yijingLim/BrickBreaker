@@ -26,7 +26,7 @@ public class Player {
 
 
     public static final Color BORDER_COLOR = Color.GREEN.darker().darker();
-    public static final Color INNER_COLOR = Color.GREEN;
+    public static final Color INNER_COLOR = new Color(3, 45, 246);
 
     private static final int DEF_MOVE_AMOUNT = 5;
 
@@ -54,6 +54,11 @@ public class Player {
     public boolean impact(Ball b){
         return playerFace.contains(b.getPosition()) && playerFace.contains(b.down) ;
     }
+
+    public boolean impactPower(Powerup powerup){
+        //return playerFace.contains(P.getLocate()) ;
+        return powerup != null && playerFace.contains(powerup.getX(),powerup.getY());
+}
 
     public void move(){
         double x = ballPoint.getX() + moveAmount;
