@@ -17,7 +17,6 @@
  */
 package test;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
@@ -37,7 +36,7 @@ public class Wall {
 
     Brick[] bricks;
     Ball ball;
-    ExtraBall[] extraball;
+    ExtraBall extraball;
     Player player;
 
 
@@ -51,15 +50,14 @@ public class Wall {
     private Point startPoint;
     private int brickCount;
     private int ballCount;
+    private int type;
     private boolean ballLost;
-    private boolean superpower;
 
 
     public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos) {
 
         this.startPoint = new Point(ballPos);
         this.powerups = new Powerup[3];
-        this.extraball = new ExtraBall[3];
 
         levels = makeLevels(drawArea, brickCount, lineCount, brickDimensionRatio);
         level = 0;
@@ -67,13 +65,12 @@ public class Wall {
 
         ballCount = 3;
         ballLost = false;
-        superpower = false;
         rnd = new Random();
 
         makeBall(ballPos);
         int speedX, speedY;
         do {
-            speedX = rnd.nextInt(5) - 2;//rnd.nextInt(5) , -2
+            speedX = 2;//rnd.nextInt(5) , -2
         } while (speedX == 0);
         do {
             speedY = -rnd.nextInt(3); //-rnd.nextInt(3)
@@ -192,7 +189,6 @@ public class Wall {
         tmp[1] = makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, CEMENT);
         tmp[2] = makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, STEEL);
         tmp[3] = makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, STEEL, CEMENT);
-        tmp[4] = makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, STEEL);// level with 2 ball
         return tmp;
     }
 
@@ -201,10 +197,8 @@ public class Wall {
         player.move();
         ball.move();
 
-        for(j=0; j<extraball.length; j++){
-            if(extraball[j]!=null){
-                extraball[j].move();
-            }
+        if (extraball != null) {
+            extraball.move();
         }
 
     }
@@ -222,15 +216,21 @@ public class Wall {
              */
             brickCount--;
             if (rnd.nextInt() < 0.3) { //probability of it to x2 the speed
-                setBallYSpeed((int) (ball.getSpeedY() * 1.5));//increase speed
+                if (ball.getSpeedY() < 8) {
+                    setBallYSpeed((int) (ball.getSpeedY() * 1.2));//increase speed
+                    System.out.println(ball.getSpeedY());
+                } else {
+                    setBallYSpeed(ball.getSpeedY());
+                }
             }
-            if (rnd.nextInt() < 1) {
-                superpower = true;
+            //set speed limit (not done)
+            int type = rnd.nextInt(2);
+            this.type = type;
+            if (rnd.nextInt() < 0.3) {
                 Point2D Locate = ball.getPosition();
-
                 for (i = 0; i < this.powerups.length; ++i) {
                     if (this.powerups[i] == null) {
-                        this.powerups[i] = new Powerup((int) Locate.getX(), (int) Locate.getY());
+                        this.powerups[i] = new Powerup((int) Locate.getX(), (int) Locate.getY(), type);
                     }
                 }
             }
@@ -239,8 +239,13 @@ public class Wall {
             ball.reverseX();
         } else if (ball.getPosition().getY() < area.getY()) {
             ball.reverseY();
+        }else if(ball.getPosition().getY() >area.getY()-50+area.getHeight()) {
+            ballCount--;
+            ballLost = true;
         }
     }
+
+
 
     public void PowerDropDown() {
         for (i = 0; i < this.powerups.length; ++i) {
@@ -248,35 +253,33 @@ public class Wall {
                 this.powerups[i].dropdown();
                 if(this.powerups[i].remove()){
                     this.powerups[i] = null;
-                    System.out.println("Hello");
                 }
 
                 if (player.impactPower(this.powerups[i])) {
-                    for(j=0; j<this.extraball.length; j++){
-                        this.extraball[j] = new ExtraBall(new Point(330, 380));
-                        int speedX1, speedY1;
-                        do {
-                            speedX1 = 2;
-                        } while (speedX1 == 0);
-                        do {
-                            speedY1 = -3; //-rnd.nextInt(3)
-                        } while (speedY1 == 0);
+                        if(this.type == 0){
+//                    if(this.extraball != null){
+                            this.extraball = new ExtraBall(new Point(330, 380));
+                            int speedX1, speedY1;
+                            do {
+                                speedX1 = 2;
+                            } while (speedX1 == 0);
+                            do {
+                                speedY1 = -3; //-rnd.nextInt(3)
+                            } while (speedY1 == 0);
 
-                        extraball[j].setSpeed(speedX1, speedY1);
-                    }
-                    this.powerups[i] = null;
-                    break;
+                            extraball.setSpeed(speedX1, speedY1);
+                        }
+                        else if(this.type == 1){
+                        player.expand();
+                        }
+
+                this.powerups[i] = null;
+                break;
                 }
-
-
             }
 
         }
     }
-
-
-
-
 
     /**
      * Same function with findImpacts
@@ -284,30 +287,28 @@ public class Wall {
      */
 
     public void findImpacts1(){
-            if (extraball[0] != null) {
-                    if (player.impact(extraball[0])) {
-                        extraball[0].reverseY();
+            if (extraball != null) {
+                    if (player.impact(extraball)) {
+                        extraball.reverseY();
                     } else if (impactWall1()) {
                         /*for efficiency reverse is done into method impactWall
                          * because for every brick program checks for horizontal and vertical impacts
                          */
                         brickCount--;
                         if (rnd.nextInt() < 0.3) { //probability of it to x2 the speed
-                            setBallYSpeed((int) (extraball[0].getSpeedY() * 1.5));//increase speed
+                            setBallYSpeed((int) (extraball.getSpeedY() * 1.5));//increase speed
                         }
 
                     } else if (impactBorder1()) {
-                        extraball[0].reverseX();
-                    } else if (extraball[0].getPosition().getY() < area.getY()) {
-                        extraball[0].reverseY();
-                    } else if (ball.getPosition().getY() > area.getY() - 50 + area.getHeight() && extraball[0].getPosition().getY() > area.getY() - 50 + area.getHeight()) {
+                        extraball.reverseX();
+                    } else if (extraball.getPosition().getY() < area.getY()) {
+                        extraball.reverseY();
+                    } else if (ball.getPosition().getY() > area.getY() - 50 + area.getHeight() && extraball.getPosition().getY() > area.getY() - 50 + area.getHeight()) {
                         ballCount--;
                         ballLost = true;
                     }
                 }
             }
-
-
 
 
     private boolean impactWall() {
@@ -333,30 +334,32 @@ public class Wall {
         return false;
     }
 
+    /**
+     * @return true when impacted the bricks
+     */
     private boolean impactWall1() {
-//        for(j=0; j< extraball.length; j++) {
-            if (extraball[0] != null) {
+            if (this.extraball != null) {
                 for (Brick b : bricks) {
-                    switch (b.findImpact(extraball[0])) {
+                    switch (b.findImpact(this.extraball)) {
                         //Vertical Impact
                         case Brick.UP_IMPACT:
-                            extraball[0].reverseY();
-                            return b.setImpact(extraball[0].down, Crack.UP);
+                            this.extraball.reverseY();
+                            return b.setImpact(this.extraball.down, Crack.UP);
                         case Brick.DOWN_IMPACT:
-                            extraball[0].reverseY();
-                            return b.setImpact(extraball[0].up, Crack.DOWN);
+                            extraball.reverseY();
+                            return b.setImpact(this.extraball.up, Crack.DOWN);
 
                         //Horizontal Impact
                         case Brick.LEFT_IMPACT:
-                            extraball[0].reverseX();
-                            return b.setImpact(extraball[0].right, Crack.RIGHT);
+                            this.extraball.reverseX();
+                            return b.setImpact(this.extraball.right, Crack.RIGHT);
                         case Brick.RIGHT_IMPACT:
-                            extraball[0].reverseX();
-                            return b.setImpact(extraball[0].left, Crack.LEFT);
+                            this.extraball.reverseX();
+                            return b.setImpact(this.extraball.left, Crack.LEFT);
                     }
                 }
             }
-//        }
+
         return false;
     }
 
@@ -366,10 +369,7 @@ public class Wall {
     }
 
     private boolean impactBorder1() {
-//        for(j=0; j< extraball.length; j++) {
-            Point2D x = extraball[0].getPosition();
-//            value[0]=  ((x.getX() < area.getX()) || (x.getX() > (area.getX() + area.getWidth())));
-//        }
+            Point2D x = extraball.getPosition();
             return ((x.getX() < area.getX()) || (x.getX() > (area.getX() + area.getWidth())));
     }
 

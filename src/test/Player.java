@@ -18,8 +18,6 @@
 package test;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 
 public class Player {
@@ -30,7 +28,7 @@ public class Player {
 
     private static final int DEF_MOVE_AMOUNT = 5;
 
-    private Rectangle playerFace;
+    public Rectangle playerFace;
     private Point ballPoint;
     private int moveAmount;
     private int min;
@@ -46,7 +44,7 @@ public class Player {
 
     }
 
-    private Rectangle makeRectangle(int width,int height){
+    public Rectangle makeRectangle(int width,int height){
         Point p = new Point((int)(ballPoint.getX() - (width / 2)),(int)ballPoint.getY());
         return  new Rectangle(p,new Dimension(width,height));
     }
@@ -56,9 +54,9 @@ public class Player {
     }
 
     public boolean impactPower(Powerup powerup){
-        //return playerFace.contains(P.getLocate()) ;
         return powerup != null && playerFace.contains(powerup.getX(),powerup.getY());
-}
+    }
+
 
     public void move(){
         double x = ballPoint.getX() + moveAmount;
@@ -80,12 +78,17 @@ public class Player {
         moveAmount = 0;
     }
 
-    public Shape getPlayerFace(){
-        return  playerFace;
+    public void expand(){
+        playerFace.width+=15;
     }
+
 
     public void moveTo(Point p){
         ballPoint.setLocation(p);
         playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
+    }
+
+    public Shape getPlayerFace() {
+        return playerFace;
     }
 }

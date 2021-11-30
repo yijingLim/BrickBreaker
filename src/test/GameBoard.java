@@ -147,14 +147,11 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         clear(g2d);
 
         drawBall(wall.ball,g2d);
-        if (wall.getLevelCount() == 1) { //2 balls in level 5
-            int i;
-            for (i=0; i<wall.extraball.length; i++) {
-                if(wall.extraball[i]!=null){
-                    drawBall(wall.extraball[i], g2d);// the extra ball
-                }
+//        if (wall.getLevelCount() == 1) { //2 balls in level 5
+            if(wall.extraball!=null){
+                drawBall(wall.extraball, g2d);// the extra ball
             }
-        }
+//        }
 
         for(Brick b : wall.bricks)
             if(!b.isBroken())
