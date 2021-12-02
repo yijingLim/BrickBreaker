@@ -3,6 +3,7 @@ package test;
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
+import java.security.cert.CertificateEncodingException;
 
 
 public class CementBrick extends Brick {
@@ -59,5 +60,9 @@ public class CementBrick extends Brick {
         super.repair();
         crack.reset();
         brickFace = super.brickFace;
+    }
+
+    public int getFullStrength(){
+        return CEMENT_STRENGTH;
     }
 }

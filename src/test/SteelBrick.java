@@ -63,4 +63,8 @@ public class SteelBrick extends Brick {
         }
     }
 
+    public int getFullStrength(){
+        return super.getFullStrength();
+    }
+
 }

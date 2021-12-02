@@ -42,10 +42,12 @@ public class Wall {
 
     private Brick[][] levels;
     private int level;
+    public int Score = 0 ;
+    private int Strength;
+    private int Bonus = 0;
 
     public Powerup[] powerups;
     int i;
-    int j;
 
     private Point startPoint;
     private int brickCount;
@@ -61,7 +63,6 @@ public class Wall {
 
         levels = makeLevels(drawArea, brickCount, lineCount, brickDimensionRatio);
         level = 0;
-
 
         ballCount = 3;
         ballLost = false;
@@ -138,6 +139,7 @@ public class Wall {
         double brickLen = drawArea.getWidth() / brickOnLine;
         double brickHgt = brickLen / brickSizeRatio;
 
+
         brickCnt += lineCnt / 2;
 
         Brick[] tmp = new Brick[brickCnt];
@@ -208,41 +210,62 @@ public class Wall {
      */
     public void findImpacts() {
 
-        if (player.impact(ball)) {
-            ball.reverseY();
-        } else if (impactWall()) {
-            /*for efficiency reverse is done into method impactWall
-             * because for every brick program checks for horizontal and vertical impacts
-             */
-            brickCount--;
-            if (rnd.nextInt() < 0.3) { //probability of it to x2 the speed
-                if (ball.getSpeedY() < 8) {
-                    setBallYSpeed((int) (ball.getSpeedY() * 1.2));//increase speed
-                    System.out.println(ball.getSpeedY());
-                } else {
-                    setBallYSpeed(ball.getSpeedY());
-                }
-            }
-            //set speed limit (not done)
-            int type = rnd.nextInt(2);
-            this.type = type;
-            if (rnd.nextInt() < 0.3) {
-                Point2D Locate = ball.getPosition();
-                for (i = 0; i < this.powerups.length; ++i) {
-                    if (this.powerups[i] == null) {
-                        this.powerups[i] = new Powerup((int) Locate.getX(), (int) Locate.getY(), type);
+            if (player.impact(ball)) {
+                ball.reverseY();
+            } else if (impactWall()) {
+                /*for efficiency reverse is done into method impactWall
+                 * because for every brick program checks for horizontal and vertical impacts
+                 */
+                brickCount--;
+                    switch (Strength) {
+                        case 1:
+                            Score += 10;
+                            break;
+
+                        case 2:
+                            Score +=20;
+                            break;
+
+                        case 3:
+                            Score +=30;
+                            break;
+                    }
+
+
+                    System.out.println("My Total Score :" + Score);
+
+
+                if (rnd.nextInt() < 0.3) { //probability of it to x2 the speed
+                    if (ball.getSpeedY() < 8) {
+                        setBallYSpeed((int) (ball.getSpeedY() * 1.2));//increase speed
+                        //System.out.println(ball.getSpeedY());
+                    } else {
+                        setBallYSpeed(ball.getSpeedY());
                     }
                 }
-            }
 
-        } else if (impactBorder()) {
-            ball.reverseX();
-        } else if (ball.getPosition().getY() < area.getY()) {
-            ball.reverseY();
-        }else if(ball.getPosition().getY() >area.getY()-50+area.getHeight()) {
-            ballCount--;
-            ballLost = true;
-        }
+                //set speed limit (not done)
+                int type = rnd.nextInt(2);
+                this.type = type;
+
+                if (rnd.nextInt() < 0.3) {
+                    Point2D Locate = ball.getPosition();
+                    for (i = 0; i < this.powerups.length; ++i) {
+                        if (this.powerups[i] == null) {
+                            this.powerups[i] = new Powerup((int) Locate.getX(), (int) Locate.getY(), type);
+                        }
+                    }
+                }
+
+
+            } else if (impactBorder()) {
+                ball.reverseX();
+            } else if (ball.getPosition().getY() < area.getY()) {
+                ball.reverseY();
+            }else if(ball.getPosition().getY() >area.getY()-50+area.getHeight()) {
+                ballCount--;
+                ballLost = true;
+            }
     }
 
 
@@ -257,7 +280,6 @@ public class Wall {
 
                 if (player.impactPower(this.powerups[i])) {
                         if(this.type == 0){
-//                    if(this.extraball != null){
                             this.extraball = new ExtraBall(new Point(330, 380));
                             int speedX1, speedY1;
                             do {
@@ -295,6 +317,7 @@ public class Wall {
                          * because for every brick program checks for horizontal and vertical impacts
                          */
                         brickCount--;
+
                         if (rnd.nextInt() < 0.3) { //probability of it to x2 the speed
                             setBallYSpeed((int) (extraball.getSpeedY() * 1.5));//increase speed
                         }
@@ -317,19 +340,30 @@ public class Wall {
                 //Vertical Impact
                 case Brick.UP_IMPACT:
                     ball.reverseY();
+                    this.Strength = b.getFullStrength();
                     return b.setImpact(ball.down, Crack.UP);//Brick.Crack.UP/down/left right
                 case Brick.DOWN_IMPACT:
                     ball.reverseY();
+                    this.Strength = b.getFullStrength();
                     return b.setImpact(ball.up, Crack.DOWN);
+
+
 
                 //Horizontal Impact
                 case Brick.LEFT_IMPACT:
                     ball.reverseX();
+                    this.Strength = b.getFullStrength();
                     return b.setImpact(ball.right, Crack.RIGHT);
                 case Brick.RIGHT_IMPACT:
                     ball.reverseX();
+                    this.Strength = b.getFullStrength();
                     return b.setImpact(ball.left, Crack.LEFT);
+
+
             }
+
+
+
         }
         return false;
     }
@@ -381,6 +415,18 @@ public class Wall {
     public int getBallCount() {
         return ballCount;
     }
+    public int getBallExtraPoint(){
+        if(getBallCount()==3){
+            Bonus = 50;
+        }
+        else if(getBallCount()==2){
+            Bonus = 40;
+        }
+        else if(getBallCount()==1){
+            Bonus = 30;
+        }
+        return Bonus;
+    }
 
     public boolean isBallLost() {
         return ballLost;
@@ -396,7 +442,6 @@ public class Wall {
         do {
             speedY = -rnd.nextInt(3);
         } while (speedY == 0);
-
         ball.setSpeed(speedX, speedY);
         ballLost = false;
     }
@@ -406,6 +451,11 @@ public class Wall {
             b.repair();
         brickCount = bricks.length;
         ballCount = 3;
+
+
+    }
+    public int resetPlayer(){
+        return player.playerFace.width = 150;
     }
 
     public boolean ballEnd() {

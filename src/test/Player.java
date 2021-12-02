@@ -82,7 +82,6 @@ public class Player {
         playerFace.width+=15;
     }
 
-
     public void moveTo(Point p){
         ballPoint.setLocation(p);
         playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
@@ -91,4 +90,5 @@ public class Player {
     public Shape getPlayerFace() {
         return playerFace;
     }
-}
+    }
+

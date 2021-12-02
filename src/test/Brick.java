@@ -2,7 +2,6 @@ package test;
 
 import java.awt.*;
 import java.awt.Point;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
@@ -21,7 +20,6 @@ abstract public class Brick {
     public static final int DOWN_IMPACT = 200;
     public static final int LEFT_IMPACT = 300;
     public static final int RIGHT_IMPACT = 400;
-
 
     static Random rnd;
 
@@ -96,6 +94,9 @@ abstract public class Brick {
     public void impact() {
         strength--;
         broken = (strength == 0);
+    }
+    public int getFullStrength(){
+        return fullStrength;
     }
 }
 

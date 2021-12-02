@@ -32,5 +32,11 @@ public class ClayBrick extends Brick {
         return super.brickFace;
     }
 
+    public int getFullStrength(){
+        return CLAY_STRENGTH;
+    }
+
+
+
 
 }
