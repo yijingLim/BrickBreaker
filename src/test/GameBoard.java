@@ -22,9 +22,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 import java.io.*;
+import java.util.Scanner;
 
 
-public class GameBoard extends JComponent implements KeyListener,MouseListener,MouseMotionListener {
+public class GameBoard<scores> extends JComponent implements KeyListener,MouseListener,MouseMotionListener {
 
     private static final String CONTINUE = "Continue";
     private static final String RESTART = "Restart";
@@ -41,7 +42,6 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private static final Color BG_COLOR = new Color(244, 244, 245);
 
     private Timer gameTimer;
-    private String HighScore ="";
 
     private Wall wall;
 
@@ -66,12 +66,22 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     private DebugConsole debugConsole;
 
+    SortHighScore highScore;
 
+    public int score1;
+    public int score2;
+    public int score3;
+    private File file;
+    private String name1;
+    private String name2;
+    private String name3;
 
     public GameBoard(GameFrame owner){
 
         super();
         this.owner=owner;
+        createFile();
+        readFile(file);
         strLen = 0;
         showPauseMenu = false;
 
@@ -107,40 +117,47 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
             Level = String.format("Level %d", wall.getLevelCount());
 
             if(wall.isBallLost()){
-                if(wall.ballEnd()){
+                if(wall.ballEnd()) {
                     wall.wallReset();
                     wall.resetPlayer();
                     message = "Game over";
-                    CheckScore();
+                    highScore = new SortHighScore(wall.Score,score1,score2,score3, name1, name2, name3);
+                    writeFile(file);
+                    wall.Score = 0;
                 }
                 wall.ballReset();
                 gameTimer.stop();
+                readFile(file);
             }
-            else if(wall.isDone()){
-                if(wall.hasLevel()){
+            else if(wall.isDone()) {
+                if (wall.hasLevel()) {
                     message = "Go to Next Level";
                     gameTimer.stop();
                     wall.getBallExtraPoint();
-                    if(wall.getBallExtraPoint()!= 0){
+                    if (wall.getBallExtraPoint() != 0) {
                         wall.Score += wall.getBallExtraPoint();
                         System.out.println("My Total Score :" + wall.Score);
+                        wall.Score = 0;
                     }
                     wall.ballReset();
                     wall.resetPlayer();
                     wall.wallReset();
                     wall.nextLevel();
 
-
-                }
-                else{
+                } else {
                     message = "ALL WALLS DESTROYED";
                     wall.getBallExtraPoint();
-                    if(wall.getBallExtraPoint()!= 0){
+                    if (wall.getBallExtraPoint() != 0) {
                         wall.Score += wall.getBallExtraPoint();
                         System.out.println("My Total Score :" + wall.Score);
+                        wall.Score = 0;
                     }
                     gameTimer.stop();
                 }
+                new SortHighScore(wall.Score,score1,score2,score3, name1, name2, name3);
+                writeFile(file);
+                wall.Score = 0;
+
             }
 
             repaint();
@@ -178,10 +195,6 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         drawLevelBar(g2d);
         wall.drawSpecialCharacteristic(g2d);
 
-        if(HighScore.equals("") ){
-            HighScore = this.getHighScore();
-        }
-
         drawPauseButton(g2d);
         if(showPauseMenu)
             drawMenu(g2d);
@@ -204,7 +217,6 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         g2d.setColor(brick.getBorderColor());
         g2d.draw(brick.getBrick());
-
 
         g2d.setColor(tmp);
     }
@@ -355,75 +367,61 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         g2d.drawString(EXIT,x,y);
 
 
-
         g2d.setFont(tmpFont);
         g2d.setColor(tmpColor);
     }
 
-    public String getHighScore()
-    {
-        //format John : 100
-        FileReader readFile = null;
-        BufferedReader reader = null;
-        try
-        {
-            readFile = new FileReader("HighScoreFile.json");
-            reader = new BufferedReader(readFile);
-            return reader.readLine();
-        }
-        catch (Exception e)
-        {
-            return "Nobody:0";
-        }
-        finally{
-            try {
-                if (reader!= null){
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+    public void createFile(){
+        try {
+            File file = new File("src\\Resources\\HighScore.txt");
+            this.file = file;
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
+            } else {
+                System.out.println("File already exists.");
             }
-        }
-
-    }
-    public void CheckScore(){
-        System.out.println(HighScore);
-        if (HighScore.equals("")){
-            return;
-        }
-        if(wall.Score > Integer.parseInt(HighScore.split(":")[1])){
-            //user set a new high score
-            String  name = JOptionPane.showInputDialog("Congratulations, You've Set a New High Score! What's your name? ");
-            HighScore = name + ":" + wall.Score;
-
-            File scorefile = new File("HighScoreFile.json");
-            if(!scorefile.exists()){
-                try {
-                    scorefile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            //create a file writer to store file and buffer writer to store file
-            FileWriter writefile = null;
-            BufferedWriter writer = null;
-            try{
-                writefile = new FileWriter(scorefile);
-                writer = new BufferedWriter(writefile);
-                writer.write(this.HighScore);
-            } catch (Exception e) {
-                //error
-            } finally {
-                if (writer != null){
-                    try {
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
+
+    public void writeFile(File file){
+        try {
+            FileWriter myWriter = new FileWriter("src\\Resources\\HighScore.txt");
+            myWriter.write(highScore.HighScore);
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public void readFile(File file){
+        try {
+            Scanner myReader = new Scanner(file);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String data1[] = data.split(" ");
+
+                String V1[] = data1[0].split(",");
+                this.score1 = Integer.parseInt(V1[0]);
+                this.name1 = V1[1];
+                String V2[] = data1[1].split(",");
+                this.score2 = Integer.parseInt(V2[0]);
+                this.name2 = V2[1];
+                String V3[] = data1[2].split(",");
+                this.score3 = Integer.parseInt(V3[0]);
+                this.name3 = V3[1];
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Override

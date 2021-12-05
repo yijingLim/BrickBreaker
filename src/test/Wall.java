@@ -71,10 +71,10 @@ public class Wall {
         makeBall(ballPos);
         int speedX, speedY;
         do {
-            speedX = 2;//rnd.nextInt(5) , -2
+            speedX = 5;//rnd.nextInt(5) , -2
         } while (speedX == 0);
         do {
-            speedY = -rnd.nextInt(3); //-rnd.nextInt(3)
+            speedY = -2; //-rnd.nextInt(3)
         } while (speedY == 0);
 
         ball.setSpeed(speedX, speedY);
@@ -262,7 +262,7 @@ public class Wall {
                 ball.reverseX();
             } else if (ball.getPosition().getY() < area.getY()) {
                 ball.reverseY();
-            }else if(ball.getPosition().getY() >area.getY()-50+area.getHeight()) {
+            }else if(ball.getPosition().getY() >area.getY()-50+area.getHeight() && extraball == null) {
                 ballCount--;
                 ballLost = true;
             }
@@ -317,6 +317,22 @@ public class Wall {
                          * because for every brick program checks for horizontal and vertical impacts
                          */
                         brickCount--;
+                        switch (Strength) {
+                            case 1:
+                                Score += 10;
+                                break;
+
+                            case 2:
+                                Score +=20;
+                                break;
+
+                            case 3:
+                                Score +=30;
+                                break;
+                        }
+
+
+                        System.out.println("My Total Score :" + Score);
 
                         if (rnd.nextInt() < 0.3) { //probability of it to x2 the speed
                             setBallYSpeed((int) (extraball.getSpeedY() * 1.5));//increase speed
@@ -346,8 +362,6 @@ public class Wall {
                     ball.reverseY();
                     this.Strength = b.getFullStrength();
                     return b.setImpact(ball.up, Crack.DOWN);
-
-
 
                 //Horizontal Impact
                 case Brick.LEFT_IMPACT:
