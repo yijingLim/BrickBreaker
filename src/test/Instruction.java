@@ -155,8 +155,8 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
             repaint(startButton.x,startButton.y,startButton.width+1,startButton.height+1);
 
         }
-        else if(backClicked){
-            backClicked = false;
+        else if(BackButton.contains(p)){
+            backClicked = true;
             repaint(BackButton.x,BackButton.y,BackButton.width+1,BackButton.height+1);
 
         }

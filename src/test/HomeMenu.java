@@ -193,6 +193,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
 
         g2d.setFont(buttonFont);
+        /**
+         * Start button is created in Home Menu
+         */
 
         int x = (menuFace.width - startButton.width) / 2;
         int y =(int) ((menuFace.height - startButton.height) * 0.6);
@@ -217,7 +220,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             g2d.draw(startButton);
             g2d.drawString(START_TEXT,x,y);
         }
-//add instruction button
+
+        /**
+         * Instruction button is created in Home Menu
+        */
         x = startButton.x;
         y = startButton.y;
 
@@ -244,6 +250,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             g2d.draw(instructionButton);
             g2d.drawString(INSTRUCTION_TEXT,x,y);
         }
+        /**
+         * Exit button is created in Home Menu
+         */
 
         x = instructionButton.x;
         y = instructionButton.y;

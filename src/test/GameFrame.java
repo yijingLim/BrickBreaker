@@ -69,7 +69,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.remove(instruction);
         this.add(gameBoard,BorderLayout.CENTER);
         this.setUndecorated(false);
-        //this.setResizable(false); // prevent the game to maximised
+        this.setResizable(false); // prevent the game to maximised
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
         this.addWindowFocusListener(this);
@@ -85,6 +85,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.addWindowFocusListener(this);
 
     }
+
     public void enableHomeMenu(){ //add instruction
         this.dispose();
         this.remove(instruction);

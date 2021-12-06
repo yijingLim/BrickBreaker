@@ -1,20 +1,19 @@
 package test;
 
 import javax.swing.*;
-import java.io.*;
-import java.util.Scanner;
 
 public class SortHighScore {
 
 
     boolean flag = false;
-    String firstPlace = null;
-    String secondPlace = null;
-    String thirdPlace = null;
+    String firstPlace;
+    String secondPlace;
+    String thirdPlace;
     String leaderboard;
     String HighScore;
 
-
+    public SortHighScore(){
+    }
     /**
      * @param Score  New Score of the game
      * @param score1 first place score in previous leaderboard
@@ -45,22 +44,22 @@ public class SortHighScore {
         if (flag == true) {
             String name = JOptionPane.showInputDialog("Congratulations, You've Set a New High Score! What's your name? ");
             if (Score == score1) {
-                firstPlace = score1 + "," + name;
+                setFirstPlace(score1 + "," + name);
             } else if (Score == score2) {
-                secondPlace = score2 + "," + name;
+                setSecondPlace(score2 + "," + name);
             } else if (Score == score3) {
-                thirdPlace = score3 + "," + name;
+                setThirdPlace(score3 + "," + name);
             }
         }
-        if (firstPlace != null) {
-            secondPlace = score2 + "," + name1;
-            thirdPlace = score3 + "," + name2;
-        } else if (secondPlace != null) {
-            firstPlace = score1 + "," + name1;
-            thirdPlace = score3 + "," + name2;
-        } else if (thirdPlace != null) {
-            firstPlace = score1 + "," + name1;
-            secondPlace = score2 + "," + name2;
+        if (getFirstPlace() != null) {
+            setSecondPlace(score2 + "," + name1);
+            setThirdPlace(score3 + "," + name2);
+        } else if (getSecondPlace() != null) {
+            setFirstPlace(score1 + "," + name1);
+            setThirdPlace(score3 + "," + name2);
+        } else if (getThirdPlace() != null) {
+            setFirstPlace(score1 + "," + name1);
+            setSecondPlace(score2 + "," + name2);
         }
 
         System.out.println("Score of the game: " + Score);
@@ -74,6 +73,31 @@ public class SortHighScore {
             leaderboard =  firstPlace + " " + secondPlace + " " + thirdPlace;
         }
         return leaderboard;
+    }
+
+
+    public String getFirstPlace() {
+        return firstPlace;
+    }
+
+    public void setFirstPlace(String firstPlace) {
+        this.firstPlace = firstPlace;
+    }
+
+    public String getSecondPlace() {
+        return secondPlace;
+    }
+
+    public void setSecondPlace(String secondPlace) {
+        this.secondPlace = secondPlace;
+    }
+
+    public String getThirdPlace() {
+        return thirdPlace;
+    }
+
+    public void setThirdPlace(String thirdPlace) {
+        this.thirdPlace = thirdPlace;
     }
 }
 

@@ -35,13 +35,24 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     private static final int TEXT_SIZE = 30;
     private static final Color MENU_COLOR = new Color(10, 209, 245);
 
-
     private static final int DEF_WIDTH = 600;
     public static final int DEF_HEIGHT = 450;
     public static final int FIRSTPLACE_HEIGHT = 150;
 
     private static final Color BG_COLOR = new Color(244, 244, 245);
     private static final Color LEADERBOARDBG_COLOR = new Color(114, 114, 212);
+    private static final Color CLICKED_BUTTON_COLOR = new Color(4, 4, 88);
+    private static final Color CLICKED_TEXT = Color.WHITE.brighter();
+
+    private final GameFrame owner;
+
+    private Rectangle BackButton;
+    private Rectangle restartButton;
+
+    private boolean restartClicked;
+    private boolean backClicked;
+
+    private Font LeaderboardFont;
 
     private Timer gameTimer;
 
@@ -55,7 +66,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     private Font menuFont;
     private Font LevelBarFont;
-    private Font LeaderboardFont;
     private Rectangle PauseButton;
     private boolean PauseClicked;
 
@@ -64,7 +74,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     private Rectangle restartButtonRect;
     private Rectangle exitButtonRect;
     private int strLen;
-    private GameFrame owner;
 
     private DebugConsole debugConsole;
 
@@ -79,6 +88,8 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     private String name2;
     private String name3;
 
+
+
     public GameBoard(GameFrame owner){
 
         super();
@@ -87,6 +98,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         readFile(file);
         strLen = 0;
         showPauseMenu = false;
+
 
         menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
         LevelBarFont = new Font("Noto Mono",Font.BOLD,25);
@@ -170,7 +182,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     }
 
-
     private void initialize(){
         this.setPreferredSize(new Dimension(DEF_WIDTH,DEF_HEIGHT));
         this.setFocusable(true);
@@ -200,6 +211,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         drawLevelBar(g2d);
 
         wall.drawSpecialCharacteristic(g2d);
+
         if(NewHighScore == true){
             drawLeaderboardBoard(g2d);
         }
@@ -394,6 +406,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         }
     }
 
+    /**
+     * @param file Highscore file
+     * Write and update the new scores into the file
+     */
     public void writeFile(File file){
         try {
             FileWriter myWriter = new FileWriter("src\\Resources\\HighScore.txt");
@@ -412,7 +428,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String data1[] = data.split(" ");
-
                 String V1[] = data1[0].split(",");
                 this.score1 = Integer.parseInt(V1[0]);
                 this.name1 = V1[1];
@@ -422,6 +437,9 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
                 String V3[] = data1[2].split(",");
                 this.score3 = Integer.parseInt(V3[0]);
                 this.name3 = V3[1];
+            }
+            if(!myReader.hasNextLine()){
+                return;
             }
             myReader.close();
         } catch (FileNotFoundException e) {
@@ -453,6 +471,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         g2d.drawString(SplitgetName(highScore.thirdPlace), 180, y1);
         g2d.drawString(SplitgetScore(highScore.thirdPlace), 450, y1);
 
+        drawButton(g2d);
     }
     private String SplitgetName(String Place){
         String Name = Place.split(",")[1];
@@ -461,6 +480,46 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     private String SplitgetScore(String Place){
         String Score = Place.split(",")[0];
         return Score;
+    }
+
+    public void drawButton(Graphics2D g2d){
+
+        Dimension btnDim = new Dimension(DEF_WIDTH/5, DEF_HEIGHT / 10);
+        restartButton = new Rectangle(btnDim);
+        BackButton = new Rectangle(btnDim);
+
+        restartButton.setLocation(DEF_WIDTH/6*4,DEF_HEIGHT /6*5);
+
+        if(restartClicked){
+            Color tmp = g2d.getColor();
+            g2d.setColor(CLICKED_BUTTON_COLOR);
+            g2d.draw(restartButton);
+            g2d.setColor(CLICKED_TEXT);
+            g2d.drawString(RESTART,410,DEF_HEIGHT/10*9);
+            g2d.setColor(tmp);
+        }
+        else{
+            g2d.draw(restartButton);
+            g2d.drawString(RESTART,410,DEF_HEIGHT/10*9);
+        }
+
+        BackButton.setLocation(DEF_WIDTH/6,DEF_HEIGHT /6*5);
+
+        if(backClicked){
+            Color tmp = g2d.getColor();
+
+            g2d.setColor(CLICKED_BUTTON_COLOR);
+            g2d.draw(BackButton);
+            g2d.setColor(CLICKED_TEXT);
+            g2d.drawString("Back",DEF_WIDTH/5,DEF_HEIGHT/10*9);
+            g2d.setColor(tmp);
+        }
+        else{
+            g2d.draw(BackButton);
+            g2d.drawString("Back",DEF_WIDTH/5,DEF_HEIGHT/10*9);
+        }
+
+
     }
 
 
@@ -526,7 +585,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             showPauseMenu = false;
             repaint();
         }
-        else if(restartButtonRect.contains(p)){
+        else if(restartButtonRect.contains(p) ){
             message = "Restarting Game...";
             wall.ballReset();
             wall.wallReset();
@@ -541,6 +600,20 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             System.exit(0);
         }
 
+        if(BackButton.contains(p)){
+            NewHighScore =false;
+            owner.enableHomeMenu();
+            repaint();
+        }
+        else if(restartButton.contains(p)){
+            message = "Restarting Game...";
+            wall.ballReset();
+            wall.wallReset();
+            NewHighScore = false;
+            repaint();
+        }
+
+
     }
 
     @Override
@@ -549,6 +622,15 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         if(PauseButton.contains(p)){
             PauseClicked = true;
             repaint(PauseButton.x,PauseButton.y,PauseButton.width+1,PauseButton.height+1);
+        }
+        else if(restartButton.contains(p)){
+            restartClicked = true;
+            repaint(restartButton.x,restartButton.y,restartButton.width+1,restartButton.height+1);
+
+        }
+        else if(BackButton.contains(p)){
+            backClicked = true;
+            repaint(BackButton.x,BackButton.y,BackButton.width+1,BackButton.height+1);
 
         }
 
@@ -559,6 +641,16 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         if(PauseClicked){
             PauseClicked = false;
             repaint(PauseButton.x,PauseButton.y,PauseButton.width+1,PauseButton.height+1);
+        }
+        else if(restartClicked){
+            restartClicked = false;
+            repaint(restartButton.x,restartButton.y,restartButton.width+1,restartButton.height+1);
+
+        }
+        else if(backClicked){
+            backClicked = false;
+            repaint(BackButton.x,BackButton.y,BackButton.width+1,BackButton.height+1);
+
         }
 
     }
