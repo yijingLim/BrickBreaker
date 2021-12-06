@@ -1,1 +1,1 @@
-90,attemp3 80,attemp2 70,attemp1
+60,D 50,E 40,D

@@ -38,8 +38,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     private static final int DEF_WIDTH = 600;
     public static final int DEF_HEIGHT = 450;
+    public static final int FIRSTPLACE_HEIGHT = 150;
 
     private static final Color BG_COLOR = new Color(244, 244, 245);
+    private static final Color LEADERBOARDBG_COLOR = new Color(114, 114, 212);
 
     private Timer gameTimer;
 
@@ -53,7 +55,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     private Font menuFont;
     private Font LevelBarFont;
-    private Font StartFont;
+    private Font LeaderboardFont;
     private Rectangle PauseButton;
     private boolean PauseClicked;
 
@@ -67,6 +69,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     private DebugConsole debugConsole;
 
     SortHighScore highScore;
+    private boolean NewHighScore = false;
 
     public int score1;
     public int score2;
@@ -87,7 +90,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
         LevelBarFont = new Font("Noto Mono",Font.BOLD,25);
-        StartFont = new Font("Noto Mono",Font.BOLD,30);
+        LeaderboardFont = new Font("Noto Mono",Font.BOLD,30);
 
         this.initialize();
         message = "";
@@ -122,6 +125,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
                     wall.resetPlayer();
                     message = "Game over";
                     highScore = new SortHighScore(wall.Score,score1,score2,score3, name1, name2, name3);
+                    NewHighScore = true;
                     writeFile(file);
                     wall.Score = 0;
                 }
@@ -154,7 +158,8 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
                     }
                     gameTimer.stop();
                 }
-                new SortHighScore(wall.Score,score1,score2,score3, name1, name2, name3);
+                highScore = new SortHighScore(wall.Score,score1,score2,score3, name1, name2, name3);
+                NewHighScore = true;
                 writeFile(file);
                 wall.Score = 0;
 
@@ -193,9 +198,12 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         drawPlayer(wall.player,g2d);
         drawLevelBar(g2d);
-        wall.drawSpecialCharacteristic(g2d);
 
-        drawPauseButton(g2d);
+        wall.drawSpecialCharacteristic(g2d);
+        if(NewHighScore == true){
+            drawLeaderboardBoard(g2d);
+        }
+
         if(showPauseMenu)
             drawMenu(g2d);
 
@@ -250,7 +258,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     }
 
-
     private void drawLevelBar(Graphics2D g2d){//putting game board on the below of the page
 
         g2d.setColor(Color.blue);
@@ -279,6 +286,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             g2d.setColor(Color.WHITE.brighter());
             g2d.draw(PauseButton);
             g2d.setColor(Color.white);
+            g2d.setFont(LevelBarFont);
             g2d.drawString("PAUSE",475,435);
             g2d.setColor(tmp);
         }
@@ -420,6 +428,47 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    private void drawLeaderboardBoard(Graphics2D g2d){
+        setLeaderBoardBackground(g2d);
+
+        g2d.setColor(Color.white);
+        g2d.setFont(LeaderboardFont);
+        g2d.drawString("LeaderBoard",200,50);
+        g2d.drawString("Rank",50,100);
+        g2d.drawString("Name",180,100);
+        g2d.drawString("Score",450,100);
+        g2d.drawString("1ST", 50, FIRSTPLACE_HEIGHT);
+        g2d.drawString(SplitgetName(highScore.firstPlace), 180, FIRSTPLACE_HEIGHT);
+        g2d.drawString(SplitgetScore(highScore.firstPlace), 450, FIRSTPLACE_HEIGHT);
+
+        int y = FIRSTPLACE_HEIGHT+50;
+        g2d.drawString("2ND", 50, y);
+        g2d.drawString(SplitgetName(highScore.secondPlace), 180, y);
+        g2d.drawString(SplitgetScore(highScore.secondPlace), 450, y);
+
+        int y1 = FIRSTPLACE_HEIGHT+100;
+        g2d.drawString("3RD", 50, y1);
+        g2d.drawString(SplitgetName(highScore.thirdPlace), 180, y1);
+        g2d.drawString(SplitgetScore(highScore.thirdPlace), 450, y1);
+
+    }
+    private String SplitgetName(String Place){
+        String Name = Place.split(",")[1];
+        return Name;
+    }
+    private String SplitgetScore(String Place){
+        String Score = Place.split(",")[0];
+        return Score;
+    }
+
+
+    private void setLeaderBoardBackground(Graphics2D g2d){
+        Color tmp = g2d.getColor();
+        g2d.setColor(LEADERBOARDBG_COLOR);
+        g2d.fillRect(0,0,getWidth(),getHeight());
+        g2d.setColor(tmp);
     }
 
 

@@ -1,1 +1,1 @@
-70,attemp1 50,xxx 40,yyy
+60,D 40,D 30,A
