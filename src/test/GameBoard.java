@@ -99,7 +99,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         strLen = 0;
         showPauseMenu = false;
 
-
         menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
         LevelBarFont = new Font("Noto Mono",Font.BOLD,25);
         LeaderboardFont = new Font("Noto Mono",Font.BOLD,30);
@@ -115,7 +114,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         wall.nextLevel();
         wall.resetPlayer();
 
-
         Level = String.format("Level %d", wall.getLevelCount());
 
         gameTimer = new Timer(10,e ->{
@@ -125,7 +123,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
             wall.findImpacts1();
             wall.PowerDropDown();
-
 
             Start = "";
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),wall.getBallCount());

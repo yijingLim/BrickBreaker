@@ -33,6 +33,10 @@ abstract public class Brick {
 
     private boolean broken;
 
+    public enum ImpactedDirection{
+        UP_IMPACT, DOWN_IMPACT, LEFT_IMPACT, RIGHT_IMPACT, NO_IMPACT
+    }
+
 
     public Brick(String name, Point pos, Dimension size, Color border, Color inner, int strength) {
 
@@ -66,18 +70,19 @@ abstract public class Brick {
     }
 
 
-    public final int findImpact(Ball b) {
+
+    public final ImpactedDirection findImpact(Ball b) {
         if (broken)
-            return 0;
-        int out = 0;
+            return ImpactedDirection.NO_IMPACT;
+        ImpactedDirection out = ImpactedDirection.NO_IMPACT;
         if (brickFace.contains(b.right))
-            out = LEFT_IMPACT;
+            out = ImpactedDirection.LEFT_IMPACT;
         else if (brickFace.contains(b.left))
-            out = RIGHT_IMPACT;
+            out = ImpactedDirection.RIGHT_IMPACT;
         else if (brickFace.contains(b.up))
-            out = DOWN_IMPACT;
+            out = ImpactedDirection.DOWN_IMPACT;
         else if (brickFace.contains(b.down))
-            out = UP_IMPACT;
+            out = ImpactedDirection.UP_IMPACT;
         return out;
     }
 
@@ -97,6 +102,15 @@ abstract public class Brick {
     public int getFullStrength(){
         return fullStrength;
     }
+
+    public void setStength(int x){
+        strength =x;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
 }
 
 

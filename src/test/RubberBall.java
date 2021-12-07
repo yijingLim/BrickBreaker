@@ -34,6 +34,7 @@ public class RubberBall extends Ball {
     }
 
 
+
     @Override
     protected Shape makeBall(Point2D center, int radiusA, int radiusB) {
 

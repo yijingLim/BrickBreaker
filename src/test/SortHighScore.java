@@ -12,8 +12,6 @@ public class SortHighScore {
     String leaderboard;
     String HighScore;
 
-    public SortHighScore(){
-    }
     /**
      * @param Score  New Score of the game
      * @param score1 first place score in previous leaderboard
@@ -21,7 +19,7 @@ public class SortHighScore {
      * @param score3 third place score in previous leaderboard
      * @param name1  first place name in previous leaderboard
      * @param name2  second place name in previous leaderboard
-     * @param name3  third place name in previous leaderboard
+     *
      */
     public SortHighScore(int Score, int score1, int score2, int score3, String name1, String name2, String name3) {
         if (Score > score3) {

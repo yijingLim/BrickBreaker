@@ -74,7 +74,7 @@ public class Wall {
             speedX = 5;//rnd.nextInt(5) , -2
         } while (speedX == 0);
         do {
-            speedY = -2; //-rnd.nextInt(3)
+            speedY = -4; //-rnd.nextInt(3)
         } while (speedY == 0);
 
         ball.setSpeed(speedX, speedY);
@@ -234,17 +234,22 @@ public class Wall {
 
                     System.out.println("My Total Score :" + Score);
 
-
-                if (rnd.nextInt() < 0.3) { //probability of it to x2 the speed
+                /**
+                 * There's 30% probabiliity for the speed to mulitply by 1.2 of its own speed
+                 * The speed is limited to y=8
+                 */
+                if (rnd.nextInt() < 0.3) {
                     if (ball.getSpeedY() < 8) {
-                        setBallYSpeed((int) (ball.getSpeedY() * 1.2));//increase speed
+                        setBallYSpeed((int) (ball.getSpeedY() * 1.2));
                         //System.out.println(ball.getSpeedY());
                     } else {
                         setBallYSpeed(ball.getSpeedY());
                     }
                 }
-
-                //set speed limit (not done)
+                /**
+                 * There's 30% probabiliity for the ball to hit a powerup function
+                 * There is more than 1 type of powerup function
+                 */
                 int type = rnd.nextInt(2);
                 this.type = type;
 
@@ -269,7 +274,12 @@ public class Wall {
     }
 
 
-
+    /**
+     * When the powerup block collide with player
+     * 2 Option of powerup is provided
+     * Powerup type 0 : Extra ball function
+     * Powerup type 1 : longer player rectangle
+     */
     public void PowerDropDown() {
         for (i = 0; i < this.powerups.length; ++i) {
             if (this.powerups[i] != null) {
@@ -279,6 +289,7 @@ public class Wall {
                 }
 
                 if (player.impactPower(this.powerups[i])) {
+
                         if(this.type == 0){
                             this.extraball = new ExtraBall(new Point(330, 380));
                             int speedX1, speedY1;
@@ -354,21 +365,21 @@ public class Wall {
         for (Brick b : bricks) {
             switch (b.findImpact(this.ball)) {
                 //Vertical Impact
-                case Brick.UP_IMPACT:
+                case UP_IMPACT:
                     ball.reverseY();
                     this.Strength = b.getFullStrength();
                     return b.setImpact(ball.down, Crack.UP);//Brick.Crack.UP/down/left right
-                case Brick.DOWN_IMPACT:
+                case DOWN_IMPACT:
                     ball.reverseY();
                     this.Strength = b.getFullStrength();
                     return b.setImpact(ball.up, Crack.DOWN);
 
                 //Horizontal Impact
-                case Brick.LEFT_IMPACT:
+                case LEFT_IMPACT:
                     ball.reverseX();
                     this.Strength = b.getFullStrength();
                     return b.setImpact(ball.right, Crack.RIGHT);
-                case Brick.RIGHT_IMPACT:
+                case RIGHT_IMPACT:
                     ball.reverseX();
                     this.Strength = b.getFullStrength();
                     return b.setImpact(ball.left, Crack.LEFT);
@@ -390,18 +401,18 @@ public class Wall {
                 for (Brick b : bricks) {
                     switch (b.findImpact(this.extraball)) {
                         //Vertical Impact
-                        case Brick.UP_IMPACT:
+                        case UP_IMPACT:
                             this.extraball.reverseY();
                             return b.setImpact(this.extraball.down, Crack.UP);
-                        case Brick.DOWN_IMPACT:
+                        case DOWN_IMPACT:
                             extraball.reverseY();
                             return b.setImpact(this.extraball.up, Crack.DOWN);
 
                         //Horizontal Impact
-                        case Brick.LEFT_IMPACT:
+                        case LEFT_IMPACT:
                             this.extraball.reverseX();
                             return b.setImpact(this.extraball.right, Crack.RIGHT);
-                        case Brick.RIGHT_IMPACT:
+                        case RIGHT_IMPACT:
                             this.extraball.reverseX();
                             return b.setImpact(this.extraball.left, Crack.LEFT);
                     }
