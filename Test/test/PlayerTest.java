@@ -10,31 +10,31 @@ class PlayerTest {
     private Player playertesting;
 
     public PlayerTest() {
-        playertesting = new Player(new Point(1,1), 10, 10, new Rectangle(0,0,100,20));
+        playertesting = new Player(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
     }
 
 
     @Test
     void impact() {
-//        Ball b = new RubberBall(new Point(10,10));
-//        Boolean outcome = playertesting.impact(b);
-//        assertTrue(outcome);
-        //function is wrong
+        BallController b = new RubberBall(new Point(10,10));
+        Boolean outcome = playertesting.impact(b);
+        assertTrue(outcome);
 
     }
 
     @Test
     void impactPower() {
-//        Powerup x = new Powerup(0, 0, 1);
-//        assertTrue(playertesting.impactPower(x));
-        //function return false instead of true
+        Powerup x = new Powerup(5, 10, 0);
+        playertesting.getPlayerFace();
+        Boolean outcome = playertesting.impactPower(x);
+        assertTrue(outcome);
+
     }
 
     @Test
     void move() {
-//        Ball b =  new RubberBall(new Point(10,10));
-//        playertesting.move();
-//        assertEquals(new Point(10,10), playertesting.getPlayerFace());
+        playertesting.move();
+        assertEquals(new Point(5,10), playertesting.getPlayerFace().getBounds().getLocation()); //(ballPoint.x - (int) playerFace.getWidth() / 2, ballPoint.y) = (10-10/2,10)
     }
 
     @Test
