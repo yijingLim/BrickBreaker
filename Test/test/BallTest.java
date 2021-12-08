@@ -69,12 +69,12 @@ class BallTest {
         assertEquals(1, BallTesting.getSpeedY());
     }
 
-//    @Test
-//    void move() {
-////        BallTesting.setSpeed(5, 5);
-////        BallTesting.move();
-////        assertEquals(new Point(5,5), BallTesting.getPo());
-//    }
+    @Test
+    void move() {
+//        BallTesting.setSpeed(5, 5);
+//        BallTesting.move();
+//        assertNotEquals(new Point(5,5), BallTesting.getPosition());
+    }
 //    @Test
 //    void moveTo() {
 //        Point P = new Point(30,20);

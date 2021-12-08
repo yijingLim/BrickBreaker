@@ -69,8 +69,6 @@ abstract public class Brick {
         return inner;
     }
 
-
-
     public final ImpactedDirection findImpact(Ball b) {
         if (broken)
             return ImpactedDirection.NO_IMPACT;

@@ -540,7 +540,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
                 wall.player.moveLeft();
                 break;
             case KeyEvent.VK_D:
-                wall.player.movRight();
+                wall.player.moveRight();
                 break;
             case KeyEvent.VK_ESCAPE:
                 showPauseMenu = !showPauseMenu;
