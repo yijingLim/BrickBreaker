@@ -35,7 +35,7 @@ public class Wall {
     private Rectangle area;
 
     Brick[] bricks;
-    Ball ball;
+    BallController ball;
     ExtraBall extraball;
     Player player;
 
@@ -71,10 +71,10 @@ public class Wall {
         makeBall(ballPos);
         int speedX, speedY;
         do {
-            speedX = 5;//rnd.nextInt(5) , -2
+            speedX = 5;
         } while (speedX == 0);
         do {
-            speedY = -4; //-rnd.nextInt(3)
+            speedY = -4;
         } while (speedY == 0);
 
         ball.setSpeed(speedX, speedY);
@@ -83,92 +83,6 @@ public class Wall {
 
         area = drawArea;
     }
-
-//    private Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type) {
-//        /*
-//          if brickCount is not divisible by line count,brickCount is adjusted to the biggest
-//          multiple of lineCount smaller then brickCount
-//         */
-//        brickCnt -= brickCnt % lineCnt;
-//
-//        int brickOnLine = brickCnt / lineCnt;
-//
-//        double brickLen = drawArea.getWidth() / brickOnLine;
-//        double brickHgt = brickLen / brickSizeRatio;
-//
-//        brickCnt += lineCnt / 2;
-//
-//        Brick[] tmp = new Brick[brickCnt];
-//
-//        Dimension brickSize = new Dimension((int) brickLen, (int) brickHgt);
-//        Point p = new Point();
-//
-//        int i;
-//        for (i = 0; i < tmp.length; i++) {
-//            int line = i / brickOnLine;
-//            if (line == lineCnt)
-//                break;
-//            double x = (i % brickOnLine) * brickLen;
-//            x = (line % 2 == 0) ? x : (x - (brickLen / 2));
-//            double y = (line) * brickHgt;
-//            p.setLocation(x, y);
-//            tmp[i] = makeBrick(p, brickSize, type);
-//        }
-//
-//        for (double y = brickHgt; i < tmp.length; i++, y += 2 * brickHgt) {
-//            double x = (brickOnLine * brickLen) - (brickLen / 2);
-//            p.setLocation(x, y);
-//            tmp[i] = new ClayBrick(p, brickSize);
-//        }
-//        return tmp;
-//
-//    }
-//
-//    private Brick[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB) {
-//        /*
-//          if brickCount is not divisible by line count,brickCount is adjusted to the biggest
-//          multiple of lineCount smaller then brickCount
-//         */
-//        brickCnt -= brickCnt % lineCnt;
-//
-//        int brickOnLine = brickCnt / lineCnt;
-//
-//        int centerLeft = brickOnLine / 2 - 1;
-//        int centerRight = brickOnLine / 2 + 1;
-//
-//        double brickLen = drawArea.getWidth() / brickOnLine;
-//        double brickHgt = brickLen / brickSizeRatio;
-//
-//
-//        brickCnt += lineCnt / 2;
-//
-//        Brick[] tmp = new Brick[brickCnt];
-//
-//        Dimension brickSize = new Dimension((int) brickLen, (int) brickHgt);
-//        Point p = new Point();
-//
-//        int i;
-//        for (i = 0; i < tmp.length; i++) {
-//            int line = i / brickOnLine;
-//            if (line == lineCnt)
-//                break;
-//            int posX = i % brickOnLine;
-//            double x = posX * brickLen;
-//            x = (line % 2 == 0) ? x : (x - (brickLen / 2));
-//            double y = (line) * brickHgt;
-//            p.setLocation(x, y);
-//
-//            boolean b = ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
-//            tmp[i] = b ? makeBrick(p, brickSize, typeA) : makeBrick(p, brickSize, typeB);
-//        }
-//
-//        for (double y = brickHgt; i < tmp.length; i++, y += 2 * brickHgt) {
-//            double x = (brickOnLine * brickLen) - (brickLen / 2);
-//            p.setLocation(x, y);
-//            tmp[i] = makeBrick(p, brickSize, typeA);
-//        }
-//        return tmp;
-//    }
 
     /**
      * @param ballPos ball initial position
@@ -368,21 +282,21 @@ public class Wall {
                 case UP_IMPACT:
                     ball.reverseY();
                     this.Strength = b.getFullStrength();
-                    return b.setImpact(ball.down, Crack.UP);//Brick.Crack.UP/down/left right
+                    return b.setImpact(ball.getDown(), Crack.UP);//Brick.Crack.UP/down/left right
                 case DOWN_IMPACT:
                     ball.reverseY();
                     this.Strength = b.getFullStrength();
-                    return b.setImpact(ball.up, Crack.DOWN);
+                    return b.setImpact(ball.getUp(), Crack.DOWN);
 
                 //Horizontal Impact
                 case LEFT_IMPACT:
                     ball.reverseX();
                     this.Strength = b.getFullStrength();
-                    return b.setImpact(ball.right, Crack.RIGHT);
+                    return b.setImpact(ball.getRight(), Crack.RIGHT);
                 case RIGHT_IMPACT:
                     ball.reverseX();
                     this.Strength = b.getFullStrength();
-                    return b.setImpact(ball.left, Crack.LEFT);
+                    return b.setImpact(ball.getLeft(), Crack.LEFT);
 
 
             }
@@ -403,18 +317,18 @@ public class Wall {
                         //Vertical Impact
                         case UP_IMPACT:
                             this.extraball.reverseY();
-                            return b.setImpact(this.extraball.down, Crack.UP);
+                            return b.setImpact(this.extraball.getDown(), Crack.UP);
                         case DOWN_IMPACT:
                             extraball.reverseY();
-                            return b.setImpact(this.extraball.up, Crack.DOWN);
+                            return b.setImpact(this.extraball.getUp(), Crack.DOWN);
 
                         //Horizontal Impact
                         case LEFT_IMPACT:
                             this.extraball.reverseX();
-                            return b.setImpact(this.extraball.right, Crack.RIGHT);
+                            return b.setImpact(this.extraball.getRight(), Crack.RIGHT);
                         case RIGHT_IMPACT:
                             this.extraball.reverseX();
-                            return b.setImpact(this.extraball.left, Crack.LEFT);
+                            return b.setImpact(this.extraball.getLeft(), Crack.LEFT);
                     }
                 }
             }
@@ -516,25 +430,6 @@ public class Wall {
     public void resetBallCount() {
         ballCount = 3;
     }
-
-//    private Brick makeBrick(Point point, Dimension size, int type) {
-//        Brick out;
-//        switch (type) {
-//            case CLAY:
-//                out = new ClayBrick(point, size);
-//                break;
-//            case STEEL:
-//                out = new SteelBrick(point, size);
-//                break;
-//            case CEMENT:
-//                out = new CementBrick(point, size);
-//                break;
-//            default:
-//                throw new IllegalArgumentException(String.format("Unknown Type:%d\n", type));
-//        }
-//        return out;
-//    }
-
 
     public void drawSpecialCharacteristic(Graphics2D g2d) {
         g2d.setColor(Color.orange);

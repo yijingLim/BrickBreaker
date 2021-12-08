@@ -195,9 +195,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         clear(g2d);
 
-        drawBall(wall.ball,g2d);
+        BallView n =  new BallView();
+        n.drawBall(wall.ball,g2d);
             if(wall.extraball!=null){
-                drawBall(wall.extraball, g2d);// the extra ball
+                n.drawBall(wall.extraball, g2d);// the extra ball
             }
 
         for(Brick b : wall.bricks)
@@ -234,20 +235,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         g2d.setColor(brick.getBorderColor());
         g2d.draw(brick.getBrick());
-
-        g2d.setColor(tmp);
-    }
-
-    private void drawBall(Ball ball,Graphics2D g2d){
-        Color tmp = g2d.getColor();
-
-        Shape s = ball.getBallFace();
-
-        g2d.setColor(ball.getInnerColor());
-        g2d.fill(s);
-
-        g2d.setColor(ball.getBorderColor());
-        g2d.draw(s);
 
         g2d.setColor(tmp);
     }

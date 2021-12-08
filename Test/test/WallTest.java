@@ -3,6 +3,7 @@ package test;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,12 +47,12 @@ class WallTest {
 
     @Test
     void wallReset() {
-//        Brick b = new ClayBrick(new Point(1,1), new Dimension(10,10));
-//        b.repair();
-//        walltesting.wallReset();
-//
-//        assertEquals(, walltesting.getBrickCount());
-        //assertEquals(3,walltesting.getBallCount());
+        Brick b = new ClayBrick(new Point(1,1), new Dimension(10,10));
+        if (b.isBroken()){
+            walltesting.wallReset();
+        }
+        assertEquals(0, walltesting.getBrickCount());
+        assertEquals(3, walltesting.getBallCount());
     }
 
     @Test
@@ -65,29 +66,33 @@ class WallTest {
     }
 
     @Test
-    void nextLevel() {
-
-    }
-
-    @Test
     void getLevelCount() {
-
+        if (walltesting.hasLevel()) {
+            assertEquals(0, walltesting.getLevelCount());
+        }
     }
 
-    @Test
-    void setBallXSpeed() {
-    }
-
-    @Test
-    void setBallYSpeed() {
-    }
 
     @Test
     void resetBallCount() {
+        walltesting.resetBallCount();
+        assertEquals(3, walltesting.getBallCount());
     }
 
     @Test
     void hasLevel() {
         assertTrue(walltesting.hasLevel());
+    }
+
+    @Test
+    void setBallXSpeed() {
+        walltesting.setBallXSpeed(3);
+        assertEquals(3,walltesting.ball.getSpeedX());
+    }
+
+    @Test
+    void setBallYSpeed() {
+        walltesting.setBallYSpeed(5);
+        assertEquals(5,walltesting.ball.getSpeedY());
     }
 }

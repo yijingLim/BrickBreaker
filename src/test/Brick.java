@@ -69,17 +69,17 @@ abstract public class Brick {
         return inner;
     }
 
-    public final ImpactedDirection findImpact(Ball b) {
+    public final ImpactedDirection findImpact(BallController b) {
         if (broken)
             return ImpactedDirection.NO_IMPACT;
         ImpactedDirection out = ImpactedDirection.NO_IMPACT;
-        if (brickFace.contains(b.right))
+        if (brickFace.contains(b.getRight()))
             out = ImpactedDirection.LEFT_IMPACT;
-        else if (brickFace.contains(b.left))
+        else if (brickFace.contains(b.getLeft()))
             out = ImpactedDirection.RIGHT_IMPACT;
-        else if (brickFace.contains(b.up))
+        else if (brickFace.contains(b.getUp()))
             out = ImpactedDirection.DOWN_IMPACT;
-        else if (brickFace.contains(b.down))
+        else if (brickFace.contains(b.getDown()))
             out = ImpactedDirection.UP_IMPACT;
         return out;
     }

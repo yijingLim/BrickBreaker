@@ -46,7 +46,7 @@ class BrickTest {
 
     @Test
     void findImpact() {
-        Ball ball = new RubberBall(new Point(100, 100));
+        BallController ball = new RubberBall(new Point(100, 100));
 
         bricktesting.impact();
         Brick.ImpactedDirection choice = bricktesting.findImpact(ball);

@@ -49,8 +49,8 @@ public class Player {
         return new Rectangle(p, new Dimension(width, height));
     }
 
-    public boolean impact(Ball b) {
-        return playerFace.contains(b.getPosition()) && playerFace.contains(b.down);
+    public boolean impact(BallController b) {
+        return playerFace.contains(b.getPosition()) && playerFace.contains(b.getDown());
     }
 
     public boolean impactPower(Powerup powerup) {
