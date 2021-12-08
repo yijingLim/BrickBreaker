@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.RectangularShape;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,30 +24,6 @@ class BallTest {
             }
         };
     }
-
-//    @Test
-//    void testSetSpeed() {
-//        BallTesting.setSpeed(1, 1);
-//        assertEquals(1, BallTesting.getSpeedX());
-//        assertEquals(1, BallTesting.getSpeedY());
-//    }
-//
-//    @Test
-//    void testsetXSpeed() {
-//        BallTesting.setXSpeed(2);
-//        assertEquals(2, BallTesting.getSpeedX());
-//    }
-//
-//    @Test
-//    void setYSpeed() {
-//        BallTesting.setYSpeed(2);
-//        assertEquals(2, BallTesting.getSpeedY());
-//    }
-//    @Test
-//    void getPosition() {
-//        Point2D expectedlocation =  new Point(10,10);
-//        assertEquals(expectedlocation, BallTesting.getPosition());
-//    }
     @Test
     void reverseX() {
         BallTesting.setXSpeed(1);
@@ -62,26 +39,24 @@ class BallTest {
         assertEquals(-1, BallTesting.getSpeedY());
     }
 
-//    @Test
-//    void setSpeed() {
-//        BallTesting.setSpeed(1,1);
-//        assertEquals(1, BallTesting.getSpeedX());
-//        assertEquals(1, BallTesting.getSpeedY());
-//    }
-
     @Test
     void move() {
-//        BallTesting.setSpeed(5, 5);
-//        BallTesting.move();
-//        assertNotEquals(new Point(5,5), BallTesting.getPosition());
+        Point2D location = new Point(50,50);
+        BallController b = new RubberBall(location);
+
+        b.setSpeed(5, 5);
+        b.move();
+        assertEquals(new Point(55,55), b.getPosition()); // Position = point + speed
     }
-//    @Test
-//    void moveTo() {
-//        Point P = new Point(30,20);
-//        BallTesting.moveTo(P);
-//        assertEquals(new Point(30,20), BallTesting.moveTo(P));
-//
-//    }
+    @Test
+    void moveTo() {
+        Point location = new Point(50,50);
+        BallController b = new RubberBall(location);
+        RectangularShape tmp = (RectangularShape) b.getBallFace();
+        b.moveTo(new Point(100,100));
+        assertEquals(95, tmp.getX()); //BallModel.getCenter().getX() -(w / 2) = 100 - (10/5) = 95
+
+    }
 
 
     @Test

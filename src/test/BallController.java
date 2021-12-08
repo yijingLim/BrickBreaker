@@ -85,6 +85,7 @@ abstract public class BallController {
     public int getSpeedY(){
         return BallModel.getSpeedY();
     }
+
     public Point2D getUp() {
         return BallModel.getUp();
     }
@@ -104,6 +105,7 @@ abstract public class BallController {
     public Point2D getPosition(){
         return BallModel.getPosition();
     }
+
     public Color getBorderColor(){
         return BallModel.getBorderColor();
     }

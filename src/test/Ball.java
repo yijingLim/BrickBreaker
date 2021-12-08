@@ -10,7 +10,6 @@ import java.awt.geom.RectangularShape;
  */
 public class Ball {
 
-//    private Shape ballFace;
 
     private Point2D center;
 
@@ -47,20 +46,6 @@ public class Ball {
         speedY = 0;
     }
 
-
-//
-//    public void move(){
-//        RectangularShape tmp = (RectangularShape) ballFace;
-//        center.setLocation((center.getX() + speedX),(center.getY() + speedY));
-//        double w = tmp.getWidth();
-//        double h = tmp.getHeight();
-//
-//        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
-//        setPoints(w,h);
-//
-//        ballFace = tmp;
-//    }
-
     public void setSpeed(int x,int y){
         speedX = x;
         speedY = y;
@@ -74,14 +59,6 @@ public class Ball {
         speedY = s;
     }
 
-//    public void reverseX(){
-//        speedX *= -1;
-//    }
-
-//    public void reverseY(){
-//        speedY *= -1;
-//    }
-
     public Color getBorderColor(){
         return border;
     }
@@ -93,29 +70,6 @@ public class Ball {
     public Point2D getPosition(){
         return center;
     }
-
-//    public Shape getBallFace(){
-//        return ballFace;
-//    }
-
-//    public void moveTo(Point p){
-//        center.setLocation(p);
-//
-//        RectangularShape tmp = (RectangularShape) ballFace;
-//        double w = tmp.getWidth();
-//        double h = tmp.getHeight();
-//
-//        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
-//        ballFace = tmp;
-//    }
-//
-//    private void setPoints(double width,double height){
-//        up.setLocation(center.getX(),center.getY()-(height / 2));
-//        down.setLocation(center.getX(),center.getY()+(height / 2));
-//
-//        left.setLocation(center.getX()-(width / 2),center.getY());
-//        right.setLocation(center.getX()+(width / 2),center.getY());
-//    }
 
     public int getSpeedX(){
         return speedX;
@@ -132,10 +86,6 @@ public class Ball {
     public void setBorder(Color border) {
         this.border = border;
     }
-
-//    public void setBallFace(Shape ballFace) {
-//        this.ballFace = ballFace;
-//    }
 
     public Point2D getCenter() {
         return center;
