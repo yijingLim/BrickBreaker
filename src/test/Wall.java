@@ -37,7 +37,7 @@ public class Wall {
     Brick[] bricks;
     BallController ball;
     ExtraBall extraball;
-    Player player;
+    PlayerController player;
 
 
     private Brick[][] levels;
@@ -79,7 +79,7 @@ public class Wall {
 
         ball.setSpeed(speedX, speedY);
 
-        player = new Player((Point) ballPos.clone(), 150, 10, drawArea);
+        player = new PlayerController((Point) ballPos.clone(), 150, 10, drawArea);
 
         area = drawArea;
     }

@@ -60,7 +60,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     private String message;
     private String Level;
-    private String Start;
+    public String Start;
 
     private boolean showPauseMenu;
 
@@ -105,9 +105,8 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         this.initialize();
         message = "";
-        Start = "Enter to Start";
         wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2,new Point(300,380));
-
+        Start = "Enter to Start";
         debugConsole = new DebugConsole(owner,wall,this);
 
         //initialize the first level
@@ -205,7 +204,9 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             if(!b.isBroken())
                 drawBrick(b,g2d);
 
-        drawPlayer(wall.player,g2d);
+        PlayerView P = new PlayerView();
+        P.drawPlayer(wall.player,g2d);
+        g2d.drawString(Start, 270, 360);
         drawLevelBar(g2d);
 
         wall.drawSpecialCharacteristic(g2d);
@@ -237,21 +238,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         g2d.draw(brick.getBrick());
 
         g2d.setColor(tmp);
-    }
-
-    private void drawPlayer(Player p,Graphics2D g2d){
-        Color tmp = g2d.getColor();
-
-        Shape s = p.getPlayerFace();
-        g2d.setColor(Player.INNER_COLOR);
-        g2d.fill(s);
-
-        g2d.setColor(Player.BORDER_COLOR);
-        g2d.draw(s);
-
-        g2d.setColor(tmp);
-        g2d.drawString(Start, 270, 360);
-
     }
 
     private void drawLevelBar(Graphics2D g2d){//putting game board on the below of the page

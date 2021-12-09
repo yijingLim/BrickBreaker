@@ -22,5 +22,85 @@ import java.awt.*;
 
 public class PlayerController {
 
+
+    public Rectangle playerFace;
+    public int width;
+    public boolean impact;
+
+    private Player PlayerModel;
+
+
+
+    public PlayerController(Point ballPoint, int width, int height, Rectangle container) {
+        PlayerModel = new Player(ballPoint,width, height,container);
+        playerFace = makeRectangle(width, height);
+
+    }
+
+    public Rectangle makeRectangle(int width, int height) {
+        Point p = new Point((int) (PlayerModel.getBallPoint().getX() - (width / 2)), (int) PlayerModel.getBallPoint().getY());
+        return new Rectangle(p, new Dimension(width, height));
+    }
+    public boolean impact(BallController b) {
+        return playerFace.contains(b.getPosition()) && playerFace.contains(b.getDown());
+    }
+
+    public boolean impactPower(Powerup powerup) {
+        return powerup != null && playerFace.contains(powerup.getX(), powerup.getY());
+    }
+
+    public void move() {
+        double x = PlayerModel.getBallPoint().getX() + PlayerModel.getMoveAmount();
+        if (x < PlayerModel.getMin() || x > PlayerModel.getMax())
+            return;
+        PlayerModel.getBallPoint().setLocation(x, PlayerModel.getBallPoint().getY());
+        playerFace.setLocation(PlayerModel.getBallPoint().x - (int) playerFace.getWidth() / 2, PlayerModel.getBallPoint().y);
+    }
+
+    public void moveLeft() {
+        setMoveAmount(-PlayerModel.getDefMoveAmount());
+    }
+
+    public void moveRight() {
+        setMoveAmount(PlayerModel.getDefMoveAmount());
+    }
+
+    public void expand() {
+        setWidthPlayerFace(playerFace.width);
+        int width = getWidthPlayerFace() + 15;
+        setWidthPlayerFace(width);
+    }
+
+    public void moveTo(Point p) {
+        PlayerModel.getBallPoint().setLocation(p);
+        playerFace.setLocation(PlayerModel.getBallPoint().x - (int) playerFace.getWidth() / 2, PlayerModel.getBallPoint().y);
+    }
+    public void setMoveAmount(int moveAmount) {
+        PlayerModel.setMoveAmount(moveAmount);
+    }
+
+    public int getMoveAmount() {
+        return PlayerModel.getMoveAmount();
+    }
+
+    public int getWidthPlayerFace() {
+        return width;
+    }
+
+    public void setWidthPlayerFace(int width) {
+        this.width = width;
+    }
+
+    public Shape getPlayerFace() {
+        return playerFace;
+    }
+
+    public void setPlayerFace(Rectangle playerFace) {
+        this.playerFace = playerFace;
+    }
+
+    public void stop(){
+        PlayerModel.stop();
+    }
 }
 

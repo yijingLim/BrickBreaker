@@ -7,10 +7,10 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    private Player playertesting;
+    private PlayerController playertesting;
 
     public PlayerTest() {
-        playertesting = new Player(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
+        playertesting = new PlayerController(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
     }
 
 
