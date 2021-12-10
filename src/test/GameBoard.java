@@ -200,9 +200,12 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
                 n.drawBall(wall.extraball, g2d);// the extra ball
             }
 
-        for(Brick b : wall.bricks)
+
+        BrickView V = new BrickView();
+            for(BrickController b : wall.bricks)
             if(!b.isBroken())
-                drawBrick(b,g2d);
+
+                V.drawBrick(b,g2d);
 
         PlayerView P = new PlayerView();
         P.drawPlayer(wall.player,g2d);
@@ -228,17 +231,17 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         g2d.setColor(tmp);
     }
 
-    private void drawBrick(Brick brick,Graphics2D g2d){
-        Color tmp = g2d.getColor();
-
-        g2d.setColor(brick.getInnerColor());
-        g2d.fill(brick.getBrick());
-
-        g2d.setColor(brick.getBorderColor());
-        g2d.draw(brick.getBrick());
-
-        g2d.setColor(tmp);
-    }
+//    private void drawBrick(BrickController brick,Graphics2D g2d){
+//        Color tmp = g2d.getColor();
+//
+//        g2d.setColor(brick.getInnerColor());
+//        g2d.fill(brick.getBrick());
+//
+//        g2d.setColor(brick.getBorderColor());
+//        g2d.draw(brick.getBrick());
+//
+//        g2d.setColor(tmp);
+//    }
 
     private void drawLevelBar(Graphics2D g2d){//putting game board on the below of the page
 
@@ -383,6 +386,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     public void writeFile(File file){
         try {
             FileWriter myWriter = new FileWriter("src\\Resources\\HighScore.txt");
+            //if file is null then print 3 null
             myWriter.write(highScore.HighScore);
             myWriter.close();
             System.out.println("Successfully wrote to the file.");

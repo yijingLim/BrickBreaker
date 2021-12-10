@@ -16,7 +16,7 @@ public class Levels {
 //        level = 0;
 //        this.type = type;
 //    }
-    public static Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type) {
+    public static BrickController[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type) {
         /*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
           multiple of lineCount smaller then brickCount
@@ -30,7 +30,7 @@ public class Levels {
 
         brickCnt += lineCnt / 2;
 
-        Brick[] tmp = new Brick[brickCnt];
+        BrickController[] tmp = new BrickController[brickCnt];
 
         Dimension brickSize = new Dimension((int) brickLen, (int) brickHgt);
         Point p = new Point();
@@ -56,8 +56,8 @@ public class Levels {
 
     }
 
-    public static Brick[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB) {
-        /*
+    public static BrickController[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB) {
+        /**
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
           multiple of lineCount smaller then brickCount
          */
@@ -74,7 +74,7 @@ public class Levels {
 
         brickCnt += lineCnt / 2;
 
-        Brick[] tmp = new Brick[brickCnt];
+        BrickController[] tmp = new BrickController[brickCnt];
 
         Dimension brickSize = new Dimension((int) brickLen, (int) brickHgt);
         Point p = new Point();
@@ -117,8 +117,8 @@ public class Levels {
 //        return tmp;
 //    }
 
-    private static Brick makeBrick(Point point, Dimension size, int type) {
-        Brick out;
+    private static BrickController makeBrick(Point point, Dimension size, int type) {
+        BrickController out;
         switch (type) {
             case CLAY:
                 out = new ClayBrick(point, size);

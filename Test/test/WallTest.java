@@ -31,7 +31,7 @@ class WallTest {
     void findImpacts() {
         int BallspeedY = b.getSpeedY();
         int BallspeedX = b.getSpeedX();
-        Brick Claybrick = new ClayBrick(new Point(1,1),new Dimension(10,10));
+        BrickController Claybrick = new ClayBrick(new Point(1,1),new Dimension(10,10));
 
         /**Test if ball reverse when ball impact the player */
         a.impact(b);
@@ -93,7 +93,7 @@ class WallTest {
 
     @Test
     void wallReset() {
-        Brick b = new ClayBrick(new Point(1,1), new Dimension(10,10));
+        BrickController b = new ClayBrick(new Point(1,1), new Dimension(10,10));
         if (b.isBroken()){
             walltesting.wallReset();
         }

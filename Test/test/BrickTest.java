@@ -14,10 +14,10 @@ class BrickTest {
     public final Color border = new Color(1,1,1);
     private Point2D BallPos = new Point(1,1);
 
-    private Brick bricktesting;
+    private BrickController bricktesting;
 
     private BrickTest() {
-        bricktesting = new Brick("Name", new Point(1, 1), dimension, border, inner, 1) {
+        bricktesting = new BrickController("Name", new Point(1, 1), dimension, border, inner, 1) {
             @Override
             protected Shape makeBrickFace(Point pos, Dimension size)
             {
@@ -39,7 +39,7 @@ class BrickTest {
 
     @Test
     void setImpact() {
-        Brick brick1 = new ClayBrick(new Point(100, 100), new Dimension(100,100));
+        BrickController brick1 = new ClayBrick(new Point(100, 100), new Dimension(100,100));
         brick1.setImpact(new Point(1, 1), 1);
         assertTrue(brick1.isBroken());
     }
@@ -49,8 +49,8 @@ class BrickTest {
         BallController ball = new RubberBall(new Point(100, 100));
 
         bricktesting.impact();
-        Brick.ImpactedDirection choice = bricktesting.findImpact(ball);
-        assertEquals(Brick.ImpactedDirection.NO_IMPACT,choice);
+        ImpactedDirection choice = bricktesting.findImpact(ball);
+        assertEquals(ImpactedDirection.NO_IMPACT,choice);
     }
 
 
@@ -68,7 +68,7 @@ class BrickTest {
 
     @Test
     void impact() {
-       bricktesting.setStength(3);
+       bricktesting.setStrength(3);
        bricktesting.impact();
        assertEquals(2,bricktesting.getStrength());
        assertTrue(!bricktesting.isBroken());

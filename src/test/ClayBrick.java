@@ -9,7 +9,7 @@ import java.awt.geom.Point2D;
  * Created by filippo on 04/09/16.
  *
  */
-public class ClayBrick extends Brick {
+public class ClayBrick extends BrickController {
 
     private static final String NAME = "Clay Brick";
     private static final Color DEF_INNER = new Color(224, 10, 10).darker();

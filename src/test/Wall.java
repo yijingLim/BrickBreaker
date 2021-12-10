@@ -34,13 +34,13 @@ public class Wall {
     private Random rnd;
     private Rectangle area;
 
-    Brick[] bricks;
+    BrickController[] bricks;
     BallController ball;
     ExtraBall extraball;
     PlayerController player;
 
 
-    private Brick[][] levels;
+    private BrickController[][] levels;
     private int level;
     public int Score = 0 ;
     private int Strength;
@@ -95,12 +95,12 @@ public class Wall {
 
     /**
      * Makelevels is to create different level with different brick arrangement
-     *
-     * @param brickCount total number of brick in the level
+     *  @param brickCount total number of brick in the level
      * @param lineCount  the total line consist of brick
+     * @return
      */
-    private Brick[][] makeLevels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio) {
-        Brick[][] tmp = new Brick[LEVELS_COUNT][];
+    private BrickController[][] makeLevels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio) {
+        BrickController[][] tmp = new BrickController[LEVELS_COUNT][];
         tmp[0] = Levels.makeSingleTypeLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY);
         tmp[1] = Levels.makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, CEMENT);
         tmp[2] = Levels.makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, STEEL);
@@ -276,7 +276,7 @@ public class Wall {
 
 
     public boolean impactWall() {
-        for (Brick b : bricks) {
+        for (BrickController b : bricks) {
             switch (b.findImpact(this.ball)) {
                 //Vertical Impact
                 case UP_IMPACT:
@@ -312,7 +312,7 @@ public class Wall {
      */
     private boolean impactWall1() {
             if (this.extraball != null) {
-                for (Brick b : bricks) {
+                for (BrickController b : bricks) {
                     switch (b.findImpact(this.extraball)) {
                         //Vertical Impact
                         case UP_IMPACT:
@@ -390,7 +390,7 @@ public class Wall {
     }
 
     public void wallReset() {
-        for (Brick b : bricks)
+        for (BrickController b : bricks)
             b.repair();
         brickCount = bricks.length;
         ballCount = 3;
