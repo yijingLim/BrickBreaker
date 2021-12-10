@@ -275,7 +275,7 @@ public class Wall {
             }
 
 
-    private boolean impactWall() {
+    public boolean impactWall() {
         for (Brick b : bricks) {
             switch (b.findImpact(this.ball)) {
                 //Vertical Impact
@@ -346,6 +346,10 @@ public class Wall {
             return ((x.getX() < area.getX()) || (x.getX() > (area.getX() + area.getWidth())));
     }
 
+
+    public void setBrickCount(int brickCount) {
+        this.brickCount = brickCount;
+    }
 
     public int getBrickCount() {
         return brickCount;

@@ -12,16 +12,62 @@ class WallTest {
     private Point ballPos = new Point(1,1);
     private Wall walltesting = new Wall(Area,10,10,1.0,ballPos);
 
+    PlayerController a = new PlayerController(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
+    BallController b = new RubberBall(new Point(10,10));
+
     @Test
     void move() {
+        PlayerController p = new PlayerController(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
+
+        BallController b = new RubberBall(new Point(10,10));
+        b.setSpeed(5, 5);
+        walltesting.move();
+
+        assertEquals(new Point(5,10), p.getPlayerFace().getBounds().getLocation());
+        assertEquals(new Point(10,10), b.getPosition());
     }
 
     @Test
     void findImpacts() {
+        int BallspeedY = b.getSpeedY();
+        int BallspeedX = b.getSpeedX();
+        Brick Claybrick = new ClayBrick(new Point(1,1),new Dimension(10,10));
+
+        /**Test if ball reverse when ball impact the player */
+        a.impact(b);
+        assertEquals(-BallspeedY, b.getSpeedY());
+
+        /**Test if ballcount subtracted when ball impact the Bricks */
+//        walltesting.findImpacts();
+//        assertEquals(29, walltesting.getBrickCount());
+
+        /**Test if ball reverse when ball impact border */
+        b.moveTo(new Point (601, 451));
+        walltesting.findImpacts();
+        assertEquals(-BallspeedX, b.getSpeedX());
+
+        /**Test if ball reverse when ball in the area frame */
+        b.moveTo(new Point (601, 20));
+        walltesting.findImpacts();
+        assertEquals(-BallspeedY, b.getSpeedY());
+
+//        /**Test if ball does not reverse when ball in out of the area frame */
+//        b.moveTo(new Point (601, -20));
+//
+//        walltesting.findImpacts();
+//        assertTrue(walltesting.isBallLost());
+
     }
 
     @Test
     void powerDropDown() {
+//        Powerup p= new Powerup(100,100, 1);
+//        PlayerController A = new PlayerController(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
+//        BallController b = new RubberBall(new Point(10,10));
+//        walltesting.PowerDropDown();
+//        A.impact(b);
+//        assertTrue(b.reverseY());
+
     }
 
     @Test

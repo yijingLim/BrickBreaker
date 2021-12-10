@@ -66,9 +66,9 @@ abstract public class BallController {
     public Shape getBallFace() {
         return ballFace;
     }
+
     public void setSpeed(int x,int y){
         BallModel.setSpeed(x,y);
-
     }
 
     public void setXSpeed(int s){
