@@ -16,13 +16,8 @@ abstract class BrickController{
 
     public BrickController(String name, Point pos, Dimension size, Color border, Color inner, int strength) {
 
-//        broken = false;
-//        this.name = name;
         BrickModel = new Brick(name, pos,size,border,inner,strength);
         brickFace = makeBrickFace(pos, size);
-//        this.border = border;
-//        this.inner = inner;
-//        this.fullStrength = this.strength = strength;
 
     }
 
@@ -36,15 +31,6 @@ abstract class BrickController{
     }
 
     public abstract Shape getBrick();
-
-
-//    public Color getBorderColor() {
-//        return border;
-//    }
-//
-//    public Color getInnerColor() {
-//        return inner;
-//    }
 
     public final ImpactedDirection findImpact(BallController b) {
         if (BrickModel.isBroken())
@@ -60,10 +46,6 @@ abstract class BrickController{
             out = ImpactedDirection.UP_IMPACT;
         return out;
     }
-//
-//    public final boolean isBroken() {
-//        return broken;
-//    }
 
     public void repair() {
         setBroken(false);
