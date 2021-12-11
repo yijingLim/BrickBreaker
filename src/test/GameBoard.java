@@ -158,6 +158,9 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
                     if (wall.getBallExtraPoint() != 0) {
                         wall.Score += wall.getBallExtraPoint();
                         System.out.println("My Total Score :" + wall.Score);
+                        highScore = new SortHighScore(wall.Score,score1,score2,score3, name1, name2, name3);
+                        NewHighScore = true;
+                        writeFile(file);
                         wall.Score = 0;
                     }
                     wall.ballReset();
@@ -171,13 +174,13 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
                     if (wall.getBallExtraPoint() != 0) {
                         wall.Score += wall.getBallExtraPoint();
                         System.out.println("My Total Score :" + wall.Score);
+                        highScore = new SortHighScore(wall.Score,score1,score2,score3, name1, name2, name3);
+                        NewHighScore = true;
+                        writeFile(file);
                         wall.Score = 0;
                     }
                     gameTimer.stop();
                 }
-                highScore = new SortHighScore(wall.Score,score1,score2,score3, name1, name2, name3);
-                NewHighScore = true;
-                writeFile(file);
                 wall.Score = 0;
 
             }
@@ -384,7 +387,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     public void writeFile(File file){
         try {
             FileWriter myWriter = new FileWriter("src\\Resources\\HighScore.txt");
-            //if file is null then print 3 null
+            //if file is null then print 3 null xx,x yy,y zz,z
             myWriter.write(highScore.HighScore);
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
