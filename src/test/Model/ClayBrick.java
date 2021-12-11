@@ -1,8 +1,9 @@
-package test;
+package test.Model;
+
+import test.Controller.BrickController;
 
 import java.awt.*;
 import java.awt.Point;
-import java.awt.geom.Point2D;
 
 
 /**
@@ -31,7 +32,7 @@ public class ClayBrick extends BrickController {
      * @return the structure of clay brick
      */
     @Override
-    protected Shape makeBrickFace(Point pos, Dimension size) {
+    public Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos,size);
     }
 

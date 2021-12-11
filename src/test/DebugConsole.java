@@ -17,6 +17,8 @@
  */
 package test;
 
+import test.Controller.BallController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;

@@ -1,8 +1,6 @@
-package test;
+package test.Model;
 
 import java.awt.*;
-import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.util.Random;
 
 /**
@@ -19,7 +17,7 @@ public class Brick {
     public static final int LEFT_IMPACT = 300;
     public static final int RIGHT_IMPACT = 400;
 
-    static Random rnd;
+    public static Random rnd;
 
     private String name;
 

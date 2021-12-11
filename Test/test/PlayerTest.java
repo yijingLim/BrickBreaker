@@ -1,6 +1,9 @@
 package test;
 
 import org.junit.jupiter.api.Test;
+import test.Controller.BallController;
+import test.Controller.PlayerController;
+import test.Model.Powerup;
 
 import java.awt.*;
 

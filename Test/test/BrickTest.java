@@ -1,6 +1,10 @@
 package test;
 
 import org.junit.jupiter.api.Test;
+import test.Controller.BallController;
+import test.Controller.BrickController;
+import test.Model.ClayBrick;
+import test.Model.ImpactedDirection;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -9,17 +13,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BrickTest {
 
-    private Dimension dimension = new Dimension(1,1);
+    public Dimension dimension = new Dimension(1,1);
     public final Color inner = new Color(1,1,1);
     public final Color border = new Color(1,1,1);
     private Point2D BallPos = new Point(1,1);
 
-    private BrickController bricktesting;
+    public BrickController bricktesting;
 
     private BrickTest() {
         bricktesting = new BrickController("Name", new Point(1, 1), dimension, border, inner, 1) {
             @Override
-            protected Shape makeBrickFace(Point pos, Dimension size)
+            public Shape makeBrickFace(Point pos, Dimension size)
             {
                 return null;
             }

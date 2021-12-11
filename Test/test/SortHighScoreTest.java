@@ -1,6 +1,7 @@
 package test;
 
 import org.junit.jupiter.api.Test;
+import test.Model.SortHighScore;
 
 import static org.junit.jupiter.api.Assertions.*;
 

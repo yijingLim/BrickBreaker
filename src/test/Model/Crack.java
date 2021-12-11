@@ -1,14 +1,11 @@
-package test;
+package test.Model;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
-import java.lang.reflect.GenericDeclaration;
-import java.lang.reflect.TypeVariable;
 import java.util.Random;
-import java.util.Scanner;
 
-import static test.Brick.rnd;
+import static test.Model.Brick.rnd;
 
 public class Crack{
 
@@ -46,7 +43,7 @@ public class Crack{
         crack.reset();
     }
 
-    protected void makeCrack(Shape brickFace,Point2D point, int direction){
+    public void makeCrack(Shape brickFace, Point2D point, int direction){
         Rectangle bounds = brickFace.getBounds();
 
         Point impact = new Point((int)point.getX(),(int)point.getY());

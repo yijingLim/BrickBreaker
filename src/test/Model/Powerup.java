@@ -1,6 +1,7 @@
-package test;
+package test.Model;
 
-import java.awt.geom.Point2D;
+import test.GameBoard;
+
 import java.awt.geom.RoundRectangle2D;
 
 public class Powerup {

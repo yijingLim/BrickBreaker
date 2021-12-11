@@ -1,17 +1,18 @@
-package test;
+package test.Controller;
+
+import test.Model.ImpactedDirection;
+import test.Model.Brick;
 
 import java.awt.*;
-import java.awt.Point;
 import java.awt.geom.Point2D;
-import java.util.Random;
 
 /**
  * Created by filippo on 04/09/16.
  *
  */
-abstract class BrickController{
-    Shape brickFace;
-    private Brick BrickModel;
+abstract public class BrickController{
+    public Shape brickFace;
+    public Brick BrickModel;
 
 
     public BrickController(String name, Point pos, Dimension size, Color border, Color inner, int strength) {
@@ -21,7 +22,7 @@ abstract class BrickController{
 
     }
 
-    protected abstract Shape makeBrickFace(Point pos, Dimension size);
+    public abstract Shape makeBrickFace(Point pos, Dimension size);
 
     public boolean setImpact(Point2D point, int dir) {
         if (isBroken())

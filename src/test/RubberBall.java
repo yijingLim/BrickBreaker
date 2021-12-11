@@ -17,6 +17,8 @@
  */
 package test;
 
+import test.Controller.BallController;
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -36,7 +38,7 @@ public class RubberBall extends BallController {
 
 
     @Override
-    protected Shape makeBall(Point2D center, int radius) {
+    public Shape makeBall(Point2D center, int radius) {
 
         double x = center.getX() - (radius / 2);
         double y = center.getY() - (radius / 2);

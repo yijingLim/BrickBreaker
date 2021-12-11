@@ -1,9 +1,12 @@
 package test;
 
 import org.junit.jupiter.api.Test;
+import test.Controller.BallController;
+import test.Controller.BrickController;
+import test.Controller.PlayerController;
+import test.Model.ClayBrick;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,6 +17,7 @@ class WallTest {
 
     PlayerController a = new PlayerController(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
     BallController b = new RubberBall(new Point(10,10));
+    BallController c = new RubberBall(new Point(10,10));
 
     @Test
     void move() {
@@ -51,13 +55,8 @@ class WallTest {
         walltesting.findImpacts();
         assertEquals(-BallspeedY, b.getSpeedY());
 
-//        /**Test if ball does not reverse when ball in out of the area frame */
-//        b.moveTo(new Point (601, -20));
-//
-//        walltesting.findImpacts();
-//        assertTrue(walltesting.isBallLost());
-
     }
+
 
     @Test
     void powerDropDown() {

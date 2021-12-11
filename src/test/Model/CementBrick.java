@@ -1,9 +1,10 @@
-package test;
+package test.Model;
+
+import test.Controller.BrickController;
 
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
-import java.security.cert.CertificateEncodingException;
 
 
 public class CementBrick extends BrickController {
@@ -34,7 +35,7 @@ public class CementBrick extends BrickController {
      * @return the Cement Brick structure
      */
     @Override
-    protected Shape makeBrickFace(Point pos, Dimension size) {
+    public Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos,size);
     }
 

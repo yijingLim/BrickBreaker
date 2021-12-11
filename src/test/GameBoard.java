@@ -17,11 +17,20 @@
  */
 package test;
 
+import test.Controller.BrickController;
+import test.Model.SortHighScore;
+import test.View.BallView;
+import test.View.BrickView;
+import test.View.PlayerView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -196,19 +205,19 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         BallView n =  new BallView();
         n.drawBall(wall.ball,g2d);
-            if(wall.extraball!=null){
-                n.drawBall(wall.extraball, g2d);// the extra ball
-            }
+        if(wall.extraball!=null){
+            n.drawBall(wall.extraball, g2d);// the extra ball
+        }
 
 
         BrickView V = new BrickView();
-            for(BrickController b : wall.bricks)
+        for(BrickController b : wall.bricks)
             if(!b.isBroken())
 
                 V.drawBrick(b,g2d);
 
-        PlayerView P = new PlayerView();
-        P.drawPlayer(wall.player,g2d);
+        PlayerView p = new PlayerView();
+        p.drawPlayer(wall.player,g2d);
         g2d.drawString(Start, 270, 360);
         drawLevelBar(g2d);
 
@@ -231,17 +240,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         g2d.setColor(tmp);
     }
 
-//    private void drawBrick(BrickController brick,Graphics2D g2d){
-//        Color tmp = g2d.getColor();
-//
-//        g2d.setColor(brick.getInnerColor());
-//        g2d.fill(brick.getBrick());
-//
-//        g2d.setColor(brick.getBorderColor());
-//        g2d.draw(brick.getBrick());
-//
-//        g2d.setColor(tmp);
-//    }
 
     private void drawLevelBar(Graphics2D g2d){//putting game board on the below of the page
 

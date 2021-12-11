@@ -1,4 +1,6 @@
-package test;
+package test.Controller;
+
+import test.Model.Ball;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -10,16 +12,16 @@ import java.awt.geom.RectangularShape;
  */
 abstract public class BallController {
 
-    private Shape ballFace;
+    public Shape ballFace;
 
-    private Ball BallModel;
+    public Ball BallModel;
 
     public BallController(Point2D center,int radius,Color inner,Color border){
         BallModel = new Ball(center, radius,inner,border);
         ballFace = makeBall(center,radius);
     }
 
-    protected abstract Shape makeBall(Point2D center,int radius);
+    public abstract Shape makeBall(Point2D center,int radius);
 
     public void move(){
         RectangularShape tmp = (RectangularShape) ballFace;

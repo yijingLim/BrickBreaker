@@ -1,4 +1,6 @@
-package test;
+package test.Model;
+
+import test.Controller.BrickController;
 
 import java.awt.*;
 

@@ -1,4 +1,6 @@
-package test;
+package test.Model;
+
+import test.Controller.BallController;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -23,7 +25,7 @@ public class ExtraBall extends BallController {
 
 
     @Override
-    protected Shape makeBall(Point2D center, int radius) {
+    public Shape makeBall(Point2D center, int radius) {
 
         double x = center.getX() - (radius / 2);
         double y = center.getY() - (radius / 2);

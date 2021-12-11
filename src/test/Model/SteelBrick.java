@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.Model;
+
+import test.Controller.BrickController;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -48,7 +50,7 @@ public class SteelBrick extends BrickController {
      * @return New Steel brick structure
      */
     @Override
-    protected Shape makeBrickFace(Point pos, Dimension size) {
+    public Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos,size);
     }
 

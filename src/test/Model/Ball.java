@@ -1,8 +1,7 @@
-package test;
+package test.Model;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.awt.geom.RectangularShape;
 
 /**
  * Created by filippo on 04/09/16.
@@ -39,7 +38,6 @@ public class Ball {
         left.setLocation(center.getX()-(radius /2),center.getY());
         right.setLocation(center.getX()+(radius /2),center.getY());
 
-       // ballFace = makeBall(center,radiusA,radiusB);
         this.border = border;
         this.inner  = inner;
         speedX = 0;

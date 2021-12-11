@@ -17,6 +17,14 @@
  */
 package test;
 
+import test.Controller.BallController;
+import test.Controller.BrickController;
+import test.Controller.PlayerController;
+import test.Model.Crack;
+import test.Model.ExtraBall;
+import test.Model.Levels;
+import test.Model.Powerup;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
@@ -157,7 +165,6 @@ public class Wall {
                 if (rnd.nextInt() < 0.3) {
                     if (ball.getSpeedY() < 8) {
                         setBallYSpeed((int) (ball.getSpeedY() * 1.2));
-                        //System.out.println(ball.getSpeedY());
                     } else {
                         setBallYSpeed(ball.getSpeedY());
                     }
@@ -312,7 +319,7 @@ public class Wall {
     /**
      * @return true when impacted the bricks
      */
-    private boolean impactWall1() {
+    public boolean impactWall1() {
             if (this.extraball != null) {
                 for (BrickController b : bricks) {
                     switch (b.findImpact(this.extraball)) {

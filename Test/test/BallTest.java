@@ -1,6 +1,7 @@
 package test;
 
 import org.junit.jupiter.api.Test;
+import test.Controller.BallController;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -18,7 +19,7 @@ class BallTest {
     public BallTest(){
         BallTesting = new BallController(location, 10, inner, border) {
             @Override
-            protected Shape makeBall(Point2D center, int radius) {
+            public Shape makeBall(Point2D center, int radius) {
 
                 return null;
             }
