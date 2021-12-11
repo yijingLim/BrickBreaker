@@ -50,7 +50,7 @@ public class TitanumBrick extends BrickController {
     /**
      * @param pos Coordinate x and  y of brick make
      * @param size size of the brick
-     * @return a new titanum brick
+     * @return a new titanum brick structure
      */
     @Override
     protected Shape makeBrickFace(Point pos, Dimension size) {

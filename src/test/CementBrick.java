@@ -18,12 +18,21 @@ public class CementBrick extends BrickController {
     private Shape brickFace;
 
 
+    /**
+     * @param point Coordinate x amd y of brick
+     * @param size Size of Cement Brick
+     */
     public CementBrick(Point point, Dimension size){
         super(NAME,point,size,DEF_BORDER,DEF_INNER,CEMENT_STRENGTH);
         crack = new Crack(getDefCrackDepth(),getDefSteps());
         brickFace = super.brickFace;
     }
 
+    /**
+     * @param pos Coordinate x amd y of brick
+     * @param size Size of Cement Brick
+     * @return the Cement Brick structure
+     */
     @Override
     protected Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos,size);
@@ -43,11 +52,17 @@ public class CementBrick extends BrickController {
     }
 
 
+    /**
+     * @return the brick face of Cement brick
+     */
     @Override
     public Shape getBrick() {
         return brickFace;
     }
 
+    /**
+     * If the remaining brick strength is not 0, the crack is updated on the cement brick face
+     */
     private void updateBrick(){
         if(!super.isBroken()){
             GeneralPath gp = crack.draw();
@@ -56,12 +71,18 @@ public class CementBrick extends BrickController {
         }
     }
 
+    /**
+     * Repair the brick wall but resetting the crack of Cement brick face
+     */
     public void repair(){
         super.repair();
         crack.reset();
         brickFace = super.brickFace;
     }
 
+    /**
+     * @return the initial strength of cement brick
+     */
     public int getFullStrength(){
         return CEMENT_STRENGTH;
     }

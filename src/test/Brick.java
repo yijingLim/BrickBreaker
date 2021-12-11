@@ -31,6 +31,14 @@ public class Brick {
 
     private boolean broken;
 
+    /**
+     * @param name the name of the brick
+     * @param pos the coordinate x and y of brick
+     * @param size size of the brick
+     * @param border the border color of the brick
+     * @param inner the inner color of the brick
+     * @param strength Strength of bricj
+     */
     public Brick(String name, Point pos, Dimension size, Color border, Color inner, int strength) {
 
         broken = false;

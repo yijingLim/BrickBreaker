@@ -4,21 +4,22 @@ import java.awt.*;
 
 public class Levels {
 
-    //private static final int LEVELS_COUNT = 4;
-
     private static final int CLAY = 1;
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
     private static final int TITANUM = 4;
     private int type;
 
-//    public Levels(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type) {
-//        levels = makeLevels(drawArea, brickCnt, lineCnt, brickSizeRatio);
-//        level = 0;
-//        this.type = type;
-//    }
+    /**
+     * @param drawArea the size of brick level
+     * @param brickCnt Total number of bricks
+     * @param lineCnt the number of line
+     * @param brickSizeRatio the size of the brick in ratio
+     * @param type the type of brick used
+     * @return the display of a single type brick on wall=
+     */
     public static BrickController[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type) {
-        /*
+        /**
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
           multiple of lineCount smaller then brickCount
          */
@@ -57,6 +58,15 @@ public class Levels {
 
     }
 
+    /**
+     * @param drawArea the size of brick level
+     * @param brickCnt Total number of bricks
+     * @param lineCnt the number of line
+     * @param brickSizeRatio the size of the brick in ratio
+     * @param typeA First type of brick type
+     * @param typeB Second type of brick type
+     * @return the display of brick on wall with typeA and typeB brick type
+     */
     public static BrickController[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB) {
         /**
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
@@ -102,22 +112,13 @@ public class Levels {
         }
         return tmp;
     }
-//    /**
-//     * Makelevels is to create different level with different brick arrangement
-//     *
-//     * @param brickCount total number of brick in the level
-//     * @param lineCount  the total line consist of brick
-//     */
 
-//    private Brick[][] makeLevels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio) {
-//        Brick[][] tmp = new Brick[LEVELS_COUNT][];
-//        tmp[0] = makeSingleTypeLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY);
-//        tmp[1] = makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, CEMENT);
-//        tmp[2] = makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, STEEL);
-//        tmp[3] = makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, STEEL, CEMENT);
-//        return tmp;
-//    }
-
+    /**
+     * @param point Coordinate x and y of brick
+     * @param size Size of brick
+     * @param type the type of brick selected
+     * @return create the respective brick type when the type is choosen
+     */
     private static BrickController makeBrick(Point point, Dimension size, int type) {
         BrickController out;
         switch (type) {

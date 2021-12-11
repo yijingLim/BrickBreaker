@@ -17,21 +17,35 @@ public class ClayBrick extends BrickController {
     private static final int CLAY_STRENGTH = 1;
 
 
-
+    /**
+     * @param point Coordinate x and y of clay brick
+     * @param size size of clay brick
+     */
     public ClayBrick(Point point, Dimension size){
         super(NAME,point,size,DEF_BORDER,DEF_INNER,CLAY_STRENGTH);
     }
 
+    /**
+     * @param pos Coordinate x and y of clay brick
+     * @param size size of clay brick
+     * @return the structure of clay brick
+     */
     @Override
     protected Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos,size);
     }
 
+    /**
+     * @return the brick face of clay
+     */
     @Override
     public Shape getBrick() {
         return super.brickFace;
     }
 
+    /**
+     * @return the initial strength of clay brick
+     */
     public int getFullStrength(){
         return CLAY_STRENGTH;
     }

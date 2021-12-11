@@ -33,6 +33,10 @@ public class SteelBrick extends BrickController {
     private Random rnd;
     private Shape brickFace;
 
+    /**
+     * @param point Coordinate x and  y of steel brick
+     * @param size size of the steel brick
+     */
     public SteelBrick(Point point, Dimension size){
         super(NAME,point,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
         rnd = new Random();
@@ -40,11 +44,17 @@ public class SteelBrick extends BrickController {
     }
 
 
+    /**
+     * @return New Steel brick structure
+     */
     @Override
     protected Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos,size);
     }
 
+    /**
+     * @return get steel brick face
+     */
     @Override
     public Shape getBrick() {
         return brickFace;
@@ -57,12 +67,19 @@ public class SteelBrick extends BrickController {
         return  super.isBroken();
     }
 
+    /**
+     * if the probability is 0.4 or less, the ball will impact the steel brick
+     * the strength of steel brick will -1
+     */
     public void impact(){
         if(rnd.nextDouble() < STEEL_PROBABILITY){
             super.impact();
         }
     }
 
+    /**
+     * @return initial strength of the steel brick
+     */
     public int getFullStrength(){
         return super.getFullStrength();
     }
