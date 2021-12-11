@@ -4,11 +4,12 @@ import java.awt.*;
 
 public class Levels {
 
-    private static final int LEVELS_COUNT = 4;
+    //private static final int LEVELS_COUNT = 4;
 
     private static final int CLAY = 1;
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
+    private static final int TITANUM = 4;
     private int type;
 
 //    public Levels(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type) {
@@ -128,6 +129,10 @@ public class Levels {
                 break;
             case CEMENT:
                 out = new CementBrick(point, size);
+                break;
+
+            case TITANUM:
+                out = new TitanumBrick(point, size);
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown Type:%d\n", type));

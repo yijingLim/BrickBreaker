@@ -29,6 +29,7 @@ public class Wall {
     private static final int CLAY = 1;
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
+    private static final int TITANUM = 4;
 
 
     private Random rnd;
@@ -105,6 +106,7 @@ public class Wall {
         tmp[1] = Levels.makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, CEMENT);
         tmp[2] = Levels.makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, CLAY, STEEL);
         tmp[3] = Levels.makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, STEEL, CEMENT);
+        tmp[4] = Levels.makeChessboardLevel(drawArea, brickCount, lineCount, brickDimensionRatio, TITANUM, CEMENT);
         return tmp;
     }
 
