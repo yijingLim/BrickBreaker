@@ -5,11 +5,14 @@ import test.Controller.PlayerController;
 import java.awt.*;
 
 public class PlayerView {
-   // public String Start;
-
     public PlayerView() {
     }
 
+    /**
+     * draw player on game board
+     * @param Player The player created
+     * @param g2d
+     */
     public void drawPlayer(PlayerController Player, Graphics2D g2d){
 
         Shape s = Player.getPlayerFace();

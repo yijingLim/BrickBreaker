@@ -34,7 +34,13 @@ public class Player {
     private int max;
 
 
-
+    /**
+     * Constructor of player
+     *  @param ballPoint
+     * @param width
+     * @param height
+     * @param container
+     */
     public Player(Point ballPoint, int width, int height, Rectangle container) {
         this.ballPoint = ballPoint;
         moveAmount = 0;
@@ -42,43 +48,66 @@ public class Player {
         max = min + container.width - width;
     }
 
+    /**
+     * When stop function is call, the move amount is set to 0
+     */
     public void stop() {
         moveAmount = 0;
     }
 
+    /**
+     * @return get the definite move amount of player
+     */
     public static int getDefMoveAmount() {
     return DEF_MOVE_AMOUNT;
 }
 
+    /**
+     * @param moveAmount the amount of move required
+     */
     public void setMoveAmount(int moveAmount) {
         this.moveAmount = moveAmount;
     }
 
+    /**
+     * @return the move amount
+     */
     public int getMoveAmount() {
         return moveAmount;
     }
 
 
+    /**
+     * @return the position of ball point
+     */
     public Point getBallPoint() {
         return ballPoint;
     }
 
-    public void setBallPoint(Point ballPoint) {
-        this.ballPoint = ballPoint;
-    }
-
+    /**
+     * @return the minimum move area amount
+     */
     public int getMin() {
         return min;
     }
 
+    /**
+     * @return maximum move area amount
+     */
     public int getMax() {
         return max;
     }
 
+    /**
+     * @return border color for the player face
+     */
     public static Color getBorderColor() {
         return BORDER_COLOR;
     }
 
+    /**
+     * @return inner color filled for player face
+     */
     public static Color getInnerColor() {
         return INNER_COLOR;
     }

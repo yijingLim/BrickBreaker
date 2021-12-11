@@ -9,6 +9,11 @@ public class BallView {
     public BallView() {
     }
 
+    /**
+     * Draw the ball in the game
+     * @param ball The content of ball such as inner and border colors, radius
+     * @param g2d
+     */
     public void drawBall(BallController ball, Graphics2D g2d){
         Color tmp = g2d.getColor();
 

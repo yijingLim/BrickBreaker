@@ -7,8 +7,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.RectangularShape;
 
 /**
- * Created by filippo on 04/09/16.
- *
+ * @author limyijing
+ * Ball Controller
  */
 abstract public class BallController {
 
@@ -16,13 +16,27 @@ abstract public class BallController {
 
     public Ball BallModel;
 
+    /**
+     * @param center the centre of the ball
+     * @param radius the radius of the ball
+     * @param inner the internal fill color of the ball
+     * @param border the color of the border of the ball
+     */
     public BallController(Point2D center,int radius,Color inner,Color border){
         BallModel = new Ball(center, radius,inner,border);
         ballFace = makeBall(center,radius);
     }
 
+    /**
+     * @param center
+     * @param radius
+     * @return a make ball
+     */
     public abstract Shape makeBall(Point2D center,int radius);
 
+    /**
+     * Set the ball location and move the ball in the game
+     */
     public void move(){
         RectangularShape tmp = (RectangularShape) ballFace;
         BallModel.getCenter().setLocation((BallModel.getCenter().getX() + BallModel.getSpeedX()),(BallModel.getCenter().getY() + BallModel.getSpeedY()));
@@ -34,18 +48,25 @@ abstract public class BallController {
 
         ballFace = tmp;
     }
-
+    /**
+     * Reverse the speed X of ball when the ball imapcted wall, brick or borders
+     */
     public void reverseX(){
-        //speedX *= -1;
         int reverse = BallModel.getSpeedX()* (-1);
         BallModel.setXSpeed(reverse);
     }
 
+    /**
+     * Reverse the speed of Y of ball when the ball imapcted wall, brick or borders
+     */
     public void reverseY(){
-//        speedY *= -1;
         BallModel.setYSpeed(BallModel.getSpeedY()*(-1));
     }
 
+    /**
+     * @param p point with coordinate x and y to move towards
+     * Moveto function help ball to move to a certain set location
+     */
     public void moveTo(Point p){
         BallModel.getCenter().setLocation(p);
 
@@ -57,6 +78,11 @@ abstract public class BallController {
         ballFace = tmp;
     }
 
+    /**
+     * To set the direction of the ball
+     * @param width the width of the game frame
+     * @param height the height of game frame
+     */
     private void setPoints(double width,double height){
         BallModel.getUp().setLocation(BallModel.getCenter().getX(),BallModel.getCenter().getY()-(height / 2));
         BallModel.getDown().setLocation(BallModel.getCenter().getX(),BallModel.getCenter().getY()+(height / 2));
@@ -65,13 +91,16 @@ abstract public class BallController {
         BallModel.getRight().setLocation(BallModel.getCenter().getX()+(width / 2),BallModel.getCenter().getY());
     }
 
+    /**
+     * @return get the ball face
+     */
     public Shape getBallFace() {
         return ballFace;
     }
 
-    public void setSpeed(int x,int y){
-        BallModel.setSpeed(x,y);
-    }
+//    public void setSpeed(int x,int y){
+//        BallModel.setSpeed(x,y);
+//    }
 
     public void setXSpeed(int s){
         BallModel.setXSpeed(s);

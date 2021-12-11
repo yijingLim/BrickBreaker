@@ -5,6 +5,7 @@ import test.Controller.BallController;
 import test.Controller.BrickController;
 import test.Model.ClayBrick;
 import test.Model.ImpactedDirection;
+import test.Model.RubberBall;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

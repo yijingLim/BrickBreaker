@@ -13,6 +13,8 @@ public class SortHighScore {
     public String HighScore;
 
     /**
+     * Sort the high score of the game into the list
+     * If the score is higher, the arrangement of the score is changed
      * @param Score  New Score of the game
      * @param score1 first place score in previous leaderboard
      * @param score2 second place score in previous leaderboard
@@ -66,6 +68,9 @@ public class SortHighScore {
     }
 
 
+    /**
+     * @return The string consist of the first to third place of highest score with their names
+     */
     public String HighScoreLeaderboard() {
         if(flag ==true) {
             leaderboard =  firstPlace + " " + secondPlace + " " + thirdPlace;

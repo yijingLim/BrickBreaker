@@ -20,10 +20,7 @@ package test;
 import test.Controller.BallController;
 import test.Controller.BrickController;
 import test.Controller.PlayerController;
-import test.Model.Crack;
-import test.Model.ExtraBall;
-import test.Model.Levels;
-import test.Model.Powerup;
+import test.Model.*;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

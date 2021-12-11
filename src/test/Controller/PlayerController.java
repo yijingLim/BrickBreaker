@@ -23,6 +23,9 @@ import test.Model.Powerup;
 import java.awt.*;
 
 
+/**
+ * Player Controller link with Player (Model) and PlayerView
+ */
 public class PlayerController {
 
 
@@ -33,24 +36,48 @@ public class PlayerController {
     private Player PlayerModel;
 
 
+    /**
+     * @param ballPoint Coordinate x and y of ball
+     * @param width the width of the player bar
+     * @param height the height of the player bar
+     * @param container the size of the player bar
+     */
     public PlayerController(Point ballPoint, int width, int height, Rectangle container) {
         PlayerModel = new Player(ballPoint,width, height,container);
         playerFace = makeRectangle(width, height);
     }
 
 
+    /**
+     * @param width width of player face
+     * @param height height of the playerface
+     * @return new playerface of the player bar
+     */
     public Rectangle makeRectangle(int width, int height) {
         Point p = new Point((int) (PlayerModel.getBallPoint().getX() - (width / 2)), (int) PlayerModel.getBallPoint().getY());
         return new Rectangle(p, new Dimension(width, height));
     }
+
+    /**
+     * check impact when player bar interesect with ball position
+     * @param b ball that impact with player
+     * @return true when ball hit the playerface
+     */
     public boolean impact(BallController b) {
         return playerFace.contains(b.getPosition()) && playerFace.contains(b.getDown());
     }
 
+    /**
+     * @param powerup the powerup block
+     * @return true if powerup is presence and intersect with the playerface
+     */
     public boolean impactPower(Powerup powerup) {
         return powerup != null && playerFace.contains(powerup.getX(), powerup.getY());
     }
 
+    /**
+     * Move the player bar horizontally within the game frame
+     */
     public void move() {
         double x = PlayerModel.getBallPoint().getX() + PlayerModel.getMoveAmount();
         if (x < PlayerModel.getMin() || x > PlayerModel.getMax())
@@ -59,20 +86,33 @@ public class PlayerController {
         playerFace.setLocation(PlayerModel.getBallPoint().x - (int) playerFace.getWidth() / 2, PlayerModel.getBallPoint().y);
     }
 
+    /**
+     * Player move to the left and move amount is negative to the left
+     */
     public void moveLeft() {
         setMoveAmount(-PlayerModel.getDefMoveAmount());
     }
 
+    /**
+     * Player move to the right and move amount is positive to the right
+     */
     public void moveRight() {
         setMoveAmount(PlayerModel.getDefMoveAmount());
     }
 
+    /**
+     * Expand the width of playerface by adding a value of 15
+     */
     public void expand() {
         setWidthPlayerFace(playerFace.width);
         int width = getWidthPlayerFace() + 15;
         setWidthPlayerFace(width);
     }
 
+    /**
+     * @param p New point assigned for the player to move towards
+     * The player move to the specific location assigned
+     */
     public void moveTo(Point p) {
         PlayerModel.getBallPoint().setLocation(p);
         playerFace.setLocation(PlayerModel.getBallPoint().x - (int) playerFace.getWidth() / 2, PlayerModel.getBallPoint().y);
@@ -95,10 +135,6 @@ public class PlayerController {
 
     public Shape getPlayerFace() {
         return playerFace;
-    }
-
-    public void setPlayerFace(Rectangle playerFace) {
-        this.playerFace = playerFace;
     }
 
     public void stop(){

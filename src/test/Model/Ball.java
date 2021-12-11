@@ -4,8 +4,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 /**
- * Created by filippo on 04/09/16.
- *
+ * Ball Model Class
  */
 public class Ball {
 
@@ -24,6 +23,12 @@ public class Ball {
     private int speedY;
 
 
+    /**
+     * @param center Center of the ball
+     * @param radius Radius of the ball
+     * @param inner the inner fill of the ball
+     * @param border the color of border of the ball
+     */
     public Ball(Point2D center, int radius, Color inner, Color border){
         this.center = center;
 
@@ -44,15 +49,18 @@ public class Ball {
         speedY = 0;
     }
 
-    public void setSpeed(int x,int y){
-        speedX = x;
-        speedY = y;
-    }
-
+    /**
+     * @param s coordinate x of the ball
+     * Set the horizontal speed of ball using x coordinate
+     */
     public void setXSpeed(int s){
         speedX = s;
     }
 
+    /**
+     * @param s coordinate y of the ball
+     * Set the vertical speed of ball using x coordinate
+     */
     public void setYSpeed(int s){
         speedY = s;
     }
@@ -77,51 +85,25 @@ public class Ball {
         return speedY;
     }
 
-    public Color getBorder() {
-        return border;
-    }
-
-    public void setBorder(Color border) {
-        this.border = border;
-    }
-
     public Point2D getCenter() {
         return center;
-    }
-
-    public void setCenter(Point2D center) {
-        this.center = center;
     }
 
     public Point2D getUp() {
         return up;
     }
 
-    public void setUp(Point2D up) {
-        this.up = up;
-    }
-
     public Point2D getDown() {
         return down;
-    }
-
-    public void setDown(Point2D down) {
-        this.down = down;
     }
 
     public Point2D getLeft() {
         return left;
     }
 
-    public void setLeft(Point2D left) {
-        this.left = left;
-    }
 
     public Point2D getRight() {
         return right;
     }
 
-    public void setRight(Point2D right) {
-        this.right = right;
-    }
 }

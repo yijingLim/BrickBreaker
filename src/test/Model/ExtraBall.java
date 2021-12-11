@@ -6,6 +6,11 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
+/**
+ * ExtraBall class is a new ball used in game
+ * It has similar characteristic with Rubber Ball
+ */
+
 public class ExtraBall extends BallController {
 
 
@@ -13,16 +18,9 @@ public class ExtraBall extends BallController {
     private static final Color DEF_INNER_COLOR = new Color(244, 88, 255);
     private static final Color DEF_BORDER_COLOR = DEF_INNER_COLOR.darker().darker();
 
-
-    /**
-     * ExtraBall class is a new ball used in game
-     */
     public ExtraBall(Point2D center){
         super(center,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR);
     }
-
-
-
 
     @Override
     public Shape makeBall(Point2D center, int radius) {

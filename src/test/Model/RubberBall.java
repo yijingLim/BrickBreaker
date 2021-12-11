@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.Model;
 
 import test.Controller.BallController;
 
@@ -23,6 +23,9 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
+/**
+ * The rubber ball is created in the game
+ */
 public class RubberBall extends BallController {
 
 
@@ -31,12 +34,19 @@ public class RubberBall extends BallController {
     private static final Color DEF_BORDER_COLOR = DEF_INNER_COLOR.darker().darker();
 
 
+    /**
+     * @param center the center of the ball
+     */
     public RubberBall(Point2D center){
         super(center,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR);
     }
 
 
-
+    /**
+     * @param center  the center of the ball with coordinate x and y
+     * @param radius the racius of the ball
+     * @return a ball shape for rubber ball is created
+     */
     @Override
     public Shape makeBall(Point2D center, int radius) {
 

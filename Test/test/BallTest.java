@@ -2,6 +2,7 @@ package test;
 
 import org.junit.jupiter.api.Test;
 import test.Controller.BallController;
+import test.Model.RubberBall;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

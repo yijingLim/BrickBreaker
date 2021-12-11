@@ -7,6 +7,9 @@ import java.util.Random;
 
 import static test.Model.Brick.rnd;
 
+/**
+ * Crack class is to draw crack on brick when is impact and not broken
+ */
 public class Crack{
 
     private static final int CRACK_SECTIONS = 3;
@@ -25,6 +28,10 @@ public class Crack{
     private int steps;
 
 
+    /**
+     * @param crackDepth The depth of crack on the brick
+     * @param steps The steps of the bricks
+     */
     public Crack(int crackDepth, int steps){
         rnd = new Random();
         crack = new GeneralPath();
@@ -33,16 +40,27 @@ public class Crack{
     }
 
 
-
+    /**
+     * @return The crack is drawn on the brick
+     */
     public GeneralPath draw(){
 
         return crack;
     }
 
+    /**
+     * Reset the crack of the brick
+     */
     public void reset(){
         crack.reset();
     }
 
+    /**
+     * @param brickFace The brick Face
+     * @param point Coordinate x and y of the crack
+     * @param direction the direction of brick being hit
+     * When the brick is hit in the specific direction, the crack will impact in the corresponding directions
+     */
     public void makeCrack(Shape brickFace, Point2D point, int direction){
         Rectangle bounds = brickFace.getBounds();
 
@@ -83,10 +101,13 @@ public class Crack{
         }
     }
 
+    /**
+     * @param start The coordinate x and y where the crack is start
+     * @param end The coordinate x and y where the crack end
+     */
     protected void makeCrack(Point start, Point end){
 
         GeneralPath path = new GeneralPath();
-
 
         path.moveTo(start.x,start.y);
 
