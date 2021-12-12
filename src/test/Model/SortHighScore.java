@@ -43,6 +43,7 @@ public class SortHighScore {
         }
         if (flag == true) {
             String name = JOptionPane.showInputDialog("Congratulations, You've Set a New High Score! What's your name? ");
+
             if (Score == score1) {
                 setFirstPlace(score1 + "," + name);
             } else if (Score == score2) {

@@ -53,16 +53,9 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     private static final Color BG_COLOR = new Color(244, 244, 245);
     private static final Color LEADERBOARDBG_COLOR = new Color(114, 114, 212);
-    private static final Color CLICKED_BUTTON_COLOR = new Color(4, 4, 88);
-    private static final Color CLICKED_TEXT = Color.WHITE.brighter();
 
     private final GameFrame owner;
 
-    private Rectangle BackButton;
-    private Rectangle restartButton;
-
-    private boolean restartClicked;
-    private boolean backClicked;
 
     private Font LeaderboardFont;
 
@@ -89,7 +82,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     private DebugConsole debugConsole;
 
-    SortHighScore highScore;
+    public SortHighScore highScore;
     private boolean NewHighScore = false;
 
     public int score1;
@@ -99,7 +92,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     private String name1;
     private String name2;
     private String name3;
-
+    private boolean ClearLeaderboard = false;
 
 
     public GameBoard(GameFrame owner){
@@ -134,6 +127,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
             wall.findImpacts1();
             wall.PowerDropDown();
+
 
             Start = "";
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),wall.getBallCount());
@@ -215,7 +209,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             n.drawBall(wall.extraball, g2d);// the extra ball
         }
 
-
         BrickView V = new BrickView();
         for(BrickController b : wall.bricks)
             if(!b.isBroken())
@@ -231,6 +224,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         if(NewHighScore == true){
             drawLeaderboardBoard(g2d);
+            NewHighScore = false;
         }
 
         if(showPauseMenu)
@@ -363,7 +357,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         g2d.drawString(EXIT,x,y);
 
-
         g2d.setFont(tmpFont);
         g2d.setColor(tmpColor);
     }
@@ -449,7 +442,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         g2d.drawString(SplitgetName(highScore.thirdPlace), 180, y1);
         g2d.drawString(SplitgetScore(highScore.thirdPlace), 450, y1);
 
-        drawButton(g2d);
+        g2d.drawString("Press SpaceBar to Restart the game !! ", 40, FIRSTPLACE_HEIGHT+200);
     }
     private String SplitgetName(String Place){
         String Name = Place.split(",")[1];
@@ -460,55 +453,12 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         return Score;
     }
 
-    public void drawButton(Graphics2D g2d){
-
-        Dimension btnDim = new Dimension(DEF_WIDTH/5, DEF_HEIGHT / 10);
-        restartButton = new Rectangle(btnDim);
-        BackButton = new Rectangle(btnDim);
-
-        restartButton.setLocation(DEF_WIDTH/6*4,DEF_HEIGHT /6*5);
-
-        if(restartClicked){
-            Color tmp = g2d.getColor();
-            g2d.setColor(CLICKED_BUTTON_COLOR);
-            g2d.draw(restartButton);
-            g2d.setColor(CLICKED_TEXT);
-            g2d.drawString(RESTART,410,DEF_HEIGHT/10*9);
-            g2d.setColor(tmp);
-        }
-        else{
-            g2d.draw(restartButton);
-            g2d.drawString(RESTART,410,DEF_HEIGHT/10*9);
-        }
-
-        BackButton.setLocation(DEF_WIDTH/6,DEF_HEIGHT /6*5);
-
-        if(backClicked){
-            Color tmp = g2d.getColor();
-
-            g2d.setColor(CLICKED_BUTTON_COLOR);
-            g2d.draw(BackButton);
-            g2d.setColor(CLICKED_TEXT);
-            g2d.drawString("Back",DEF_WIDTH/5,DEF_HEIGHT/10*9);
-            g2d.setColor(tmp);
-        }
-        else{
-            g2d.draw(BackButton);
-            g2d.drawString("Back",DEF_WIDTH/5,DEF_HEIGHT/10*9);
-        }
-
-
-    }
-
-
     private void setLeaderBoardBackground(Graphics2D g2d){
         Color tmp = g2d.getColor();
         g2d.setColor(LEADERBOARDBG_COLOR);
         g2d.fillRect(0,0,getWidth(),getHeight());
         g2d.setColor(tmp);
     }
-
-
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
@@ -578,19 +528,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             System.exit(0);
         }
 
-        if(BackButton.contains(p)){
-            NewHighScore =false;
-            owner.enableHomeMenu();
-            repaint();
-        }
-        else if(restartButton.contains(p)){
-            message = "Restarting Game...";
-            wall.ballReset();
-            wall.wallReset();
-            NewHighScore = false;
-            repaint();
-        }
-
 
     }
 
@@ -601,16 +538,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
             PauseClicked = true;
             repaint(PauseButton.x,PauseButton.y,PauseButton.width+1,PauseButton.height+1);
         }
-        else if(restartButton.contains(p)){
-            restartClicked = true;
-            repaint(restartButton.x,restartButton.y,restartButton.width+1,restartButton.height+1);
 
-        }
-        else if(BackButton.contains(p)){
-            backClicked = true;
-            repaint(BackButton.x,BackButton.y,BackButton.width+1,BackButton.height+1);
-
-        }
 
     }
 
@@ -619,16 +547,6 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         if(PauseClicked){
             PauseClicked = false;
             repaint(PauseButton.x,PauseButton.y,PauseButton.width+1,PauseButton.height+1);
-        }
-        else if(restartClicked){
-            restartClicked = false;
-            repaint(restartButton.x,restartButton.y,restartButton.width+1,restartButton.height+1);
-
-        }
-        else if(backClicked){
-            backClicked = false;
-            repaint(BackButton.x,BackButton.y,BackButton.width+1,BackButton.height+1);
-
         }
 
     }
