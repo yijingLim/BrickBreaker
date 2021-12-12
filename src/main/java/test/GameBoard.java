@@ -187,6 +187,9 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     }
 
+    /**
+     * I
+     */
     private void initialize(){
         this.setPreferredSize(new Dimension(DEF_WIDTH,DEF_HEIGHT));
         this.setFocusable(true);
