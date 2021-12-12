@@ -10,7 +10,7 @@ public class Levels {
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
     private static final int TITANUM = 4;
-    private int type;
+    //private int type;
 
     /**
      * @param drawArea the size of brick level
@@ -122,20 +122,21 @@ public class Levels {
      * @return create the respective brick type when the type is choosen
      */
     private static BrickController makeBrick(Point point, Dimension size, int type) {
+        BrickFactory brick = new BrickFactory();
         BrickController out;
         switch (type) {
             case CLAY:
-                out = new ClayBrick(point, size);
-                break;
+                out = brick.getBrickType("CLAY", point, size);
+            break;
             case STEEL:
-                out = new SteelBrick(point, size);
+                out = brick.getBrickType("STEEL", point, size);
                 break;
             case CEMENT:
-                out = new CementBrick(point, size);
+                out = brick.getBrickType("CEMENT", point, size);
                 break;
 
             case TITANUM:
-                out = new TitanumBrick(point, size);
+                out = brick.getBrickType("TITANUM", point, size);
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown Type:%d\n", type));
