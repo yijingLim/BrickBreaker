@@ -15,7 +15,7 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
     private static final String START_TEXT = "Start";
     private static final int TEXT_SIZE = 30;
     private static final Color MENU_COLOR = new Color(3, 1, 64);
-    private static final Color BG_COLOR = Color.CYAN;
+    private static final Color BG_COLOR = new Color(113, 109, 248);
     private static final Color CLICKED_BUTTON_COLOR = Color.WHITE.brighter();
     private static final Color CLICKED_TEXT = Color.WHITE;
 
@@ -130,8 +130,6 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
 
 
     }
-
-
 
         @Override
     public void mouseClicked(MouseEvent e) {
