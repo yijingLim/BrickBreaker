@@ -46,7 +46,8 @@ class BallTest {
         Point2D location = new Point(50,50);
         BallController b = new RubberBall(location);
 
-        b.setSpeed(5, 5);
+        b.setXSpeed(5);
+        b.setYSpeed(5);
         b.move();
         assertEquals(new Point(55,55), b.getPosition()); // Position = point + speed
     }

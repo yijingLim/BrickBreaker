@@ -31,10 +31,10 @@ public class PlayerController {
 
     public Rectangle playerFace;
     public int width;
+    private int height;
     public boolean impact;
 
     private Player PlayerModel;
-
 
     /**
      * @param ballPoint Coordinate x and y of ball
@@ -45,6 +45,7 @@ public class PlayerController {
     public PlayerController(Point ballPoint, int width, int height, Rectangle container) {
         PlayerModel = new Player(ballPoint,width, height,container);
         playerFace = makeRectangle(width, height);
+        this.height = height;
     }
 
 
@@ -107,6 +108,7 @@ public class PlayerController {
         setWidthPlayerFace(playerFace.width);
         int width = getWidthPlayerFace() + 15;
         setWidthPlayerFace(width);
+        playerFace = makeRectangle(width, height);
     }
 
     /**
@@ -125,10 +127,16 @@ public class PlayerController {
         return PlayerModel.getMoveAmount();
     }
 
+    /**
+     * @return the width of the player face
+     */
     public int getWidthPlayerFace() {
         return width;
     }
 
+    /**
+     * @param width the set the width of player face
+     */
     public void setWidthPlayerFace(int width) {
         this.width = width;
     }

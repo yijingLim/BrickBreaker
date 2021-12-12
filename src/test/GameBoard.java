@@ -18,7 +18,10 @@
 package test;
 
 import test.Controller.BrickController;
+import test.Controller.DebugConsole;
+import test.Controller.GameFrame;
 import test.Model.SortHighScore;
+import test.Model.Wall;
 import test.View.BallView;
 import test.View.BrickView;
 import test.View.PlayerView;

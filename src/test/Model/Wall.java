@@ -15,12 +15,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.Model;
 
 import test.Controller.BallController;
 import test.Controller.BrickController;
 import test.Controller.PlayerController;
-import test.Model.*;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -40,10 +39,10 @@ public class Wall {
     private Random rnd;
     private Rectangle area;
 
-    BrickController[] bricks;
-    BallController ball;
-    ExtraBall extraball;
-    PlayerController player;
+    public BrickController[] bricks;
+    public BallController ball;
+    public ExtraBall extraball;
+    public PlayerController player;
 
 
     private BrickController[][] levels;
@@ -83,7 +82,8 @@ public class Wall {
             speedY = -4;
         } while (speedY == 0);
 
-        ball.setSpeed(speedX, speedY);
+        ball.setXSpeed(speedX);
+        ball.setYSpeed(speedY);
 
         player = new PlayerController((Point) ballPos.clone(), 150, 10, drawArea);
 
@@ -123,18 +123,18 @@ public class Wall {
         if (extraball != null) {
             extraball.move();
         }
-
     }
 
     /**
      * Find whether the ball impacted the wall, brick, border and assign direction after impacts
+     * When a certain type of brick is added, the score will be accumulated based on their strength
      */
     public void findImpacts() {
 
             if (player.impact(ball)) {
                 ball.reverseY();
             } else if (impactWall()) {
-                /*for efficiency reverse is done into method impactWall
+                /**for efficiency reverse is done into method impactWall
                  * because for every brick program checks for horizontal and vertical impacts
                  */
                 brickCount--;
@@ -149,6 +149,10 @@ public class Wall {
 
                         case 3:
                             Score +=30;
+                            break;
+
+                        case 4:
+                            Score +=40;
                             break;
                     }
 
@@ -217,13 +221,14 @@ public class Wall {
                                 speedX1 = 2;
                             } while (speedX1 == 0);
                             do {
-                                speedY1 = -3; //-rnd.nextInt(3)
+                                speedY1 = -3;
                             } while (speedY1 == 0);
 
-                            extraball.setSpeed(speedX1, speedY1);
+                            extraball.setXSpeed(speedX1);
+                            extraball.setYSpeed(speedY1);
                         }
                         else if(this.type == 1){
-                        player.expand();
+                            player.expand();
                         }
 
                 this.powerups[i] = null;
@@ -260,6 +265,10 @@ public class Wall {
                             case 3:
                                 Score +=30;
                                 break;
+
+                            case 4:
+                                Score +=40;
+                                break;
                         }
 
 
@@ -281,6 +290,9 @@ public class Wall {
             }
 
 
+    /**
+     * @return
+     */
     public boolean impactWall() {
         for (BrickController b : bricks) {
             switch (b.findImpact(this.ball)) {
@@ -303,23 +315,20 @@ public class Wall {
                     ball.reverseX();
                     this.Strength = b.getFullStrength();
                     return b.setImpact(ball.getLeft(), Crack.LEFT);
-
-
             }
-
-
-
         }
         return false;
     }
 
     /**
+     * Check if extra ball impacted the wall
      * @return true when impacted the bricks
      */
     public boolean impactWall1() {
             if (this.extraball != null) {
                 for (BrickController b : bricks) {
                     switch (b.findImpact(this.extraball)) {
+
                         //Vertical Impact
                         case UP_IMPACT:
                             this.extraball.reverseY();
@@ -338,23 +347,24 @@ public class Wall {
                     }
                 }
             }
-
         return false;
     }
 
+    /**
+     * @return true when rubber ball impact the border
+     */
     private boolean impactBorder() {
         Point2D p = ball.getPosition();
         return ((p.getX() < area.getX()) || (p.getX() > (area.getX() + area.getWidth())));
     }
 
+    /**
+     *
+     * @return true when extra rubber ball impact the border
+     */
     private boolean impactBorder1() {
             Point2D x = extraball.getPosition();
             return ((x.getX() < area.getX()) || (x.getX() > (area.getX() + area.getWidth())));
-    }
-
-
-    public void setBrickCount(int brickCount) {
-        this.brickCount = brickCount;
     }
 
     public int getBrickCount() {
@@ -364,6 +374,11 @@ public class Wall {
     public int getBallCount() {
         return ballCount;
     }
+
+
+    /**
+     * @return bonus score when game is over when ballcount is not null
+     */
     public int getBallExtraPoint(){
         if(getBallCount()==3){
             Bonus = 50;
@@ -381,6 +396,9 @@ public class Wall {
         return ballLost;
     }
 
+    /**
+     *
+     */
     public void ballReset() {
         player.moveTo(startPoint);
         ball.moveTo(startPoint);
@@ -391,7 +409,9 @@ public class Wall {
         do {
             speedY = -rnd.nextInt(3);
         } while (speedY == 0);
-        ball.setSpeed(speedX, speedY);
+        ball.setXSpeed(speedX);
+        ball.setYSpeed(speedY);
+
         ballLost = false;
     }
 
@@ -400,9 +420,8 @@ public class Wall {
             b.repair();
         brickCount = bricks.length;
         ballCount = 3;
-
-
     }
+
     public int resetPlayer(){
         return player.playerFace.width = 150;
     }
@@ -424,9 +443,11 @@ public class Wall {
         return level < levels.length;
     }
 
+    /**
+     * @return Level of the game
+     */
     public int getLevelCount() {
-
-        return level;//level count
+        return level;
     }
 
     public void setBallXSpeed(int s) {
@@ -441,6 +462,18 @@ public class Wall {
         ballCount = 3;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    /**
+     * draw special characteristic block representing powerup
+     * @param g2d Graphics2D g2d
+     */
     public void drawSpecialCharacteristic(Graphics2D g2d) {
         g2d.setColor(Color.orange);
 

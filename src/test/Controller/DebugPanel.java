@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.Controller;
+
+import test.Model.Wall;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -37,6 +39,12 @@ public class DebugPanel extends JPanel {
 
     private Wall wall;
 
+    /**
+     * Debug Panel is a controller that change the level of the game or the speed of the ball
+     * The game can reset the ball and skip the level by pressing the button
+     * The game can increase the horizontal and vertical speed using the slider
+     * @param wall represent the wall class
+     */
     public DebugPanel(Wall wall){
 
         this.wall = wall;
@@ -57,17 +65,31 @@ public class DebugPanel extends JPanel {
 
     }
 
+    /**
+     * Initialize the display of the debug panel
+     */
     private void initialize(){
         this.setBackground(DEF_BKG);
         this.setLayout(new GridLayout(2,2));
     }
 
+    /**
+     * @param title Title of the button made
+     * @param e the action listener in the panel
+     * @return a new button
+     */
     private JButton makeButton(String title, ActionListener e){
         JButton out = new JButton(title);
         out.addActionListener(e);
         return  out;
     }
 
+    /**
+     * @param min The minimum value of slider
+     * @param max the maximum value of slider
+     * @param e the action listener in the panel
+     * @return a new slider is created
+     */
     private JSlider makeSlider(int min, int max, ChangeListener e){
         JSlider out = new JSlider(min,max);
         out.setMajorTickSpacing(1);
@@ -77,6 +99,11 @@ public class DebugPanel extends JPanel {
         return out;
     }
 
+    /**
+     * Set the speed of ball that is desired
+     * @param x The horizontal speed of ball
+     * @param y The vertical speed of ball
+     */
     public void setValues(int x,int y){
         ballXSpeed.setValue(x);
         ballYSpeed.setValue(y);

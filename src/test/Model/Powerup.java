@@ -78,4 +78,6 @@ public class Powerup {
     public boolean remove() {
         return remove;
     }
+
 }
+

@@ -5,6 +5,9 @@ import test.Model.SortHighScore;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * To test if the scores are stored into a string value
+ */
 class SortHighScoreTest {
     SortHighScore s = new SortHighScore(3,5, 4, 2, "A", "B","C");
 

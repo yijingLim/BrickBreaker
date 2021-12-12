@@ -5,7 +5,9 @@ import test.Controller.BallController;
 import test.Controller.BrickController;
 import test.Controller.PlayerController;
 import test.Model.ClayBrick;
+import test.Model.Powerup;
 import test.Model.RubberBall;
+import test.Model.Wall;
 
 import java.awt.*;
 
@@ -39,7 +41,8 @@ class WallTest {
         PlayerController p = new PlayerController(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
 
         BallController b = new RubberBall(new Point(10,10));
-        b.setSpeed(5, 5);
+        b.setXSpeed(5);
+        b.setYSpeed(5);
         walltesting.move();
 
         assertEquals(new Point(5,10), p.getPlayerFace().getBounds().getLocation());
@@ -75,15 +78,27 @@ class WallTest {
      * Test if when impact power up with player in type1, playerface width increase by 15
      */
     @Test
-    void powerDropDownExpandPlayer() {
-//        Powerup p = new Powerup(5,10, 1);
-////        a.getPlayerFace();
-//////        a.impactPower(p);
-//        walltesting.PowerDropDown();
-//       // assertEquals(25,a.getPlayerFace().getBounds().getWidth());
-//        assertEquals(1, p.typeofPower);
-
+    void powerDropDownExtraBall() {
+        Powerup p = new Powerup(10,10, 0);
+        a.getPlayerFace();
+        BallController b = new RubberBall(new Point(10,10));
+        b.setXSpeed(5);
+        b.setYSpeed(5);
+        a.impactPower(p);
+        walltesting.PowerDropDown();
+        assertEquals(5,b.getSpeedX());
     }
+
+    @Test
+    void powerDropDownExpandPlayer() {
+//        Powerup p = new Powerup(10, 10, 1);
+//        walltesting.setType(1);
+//        a.impactPower(p);
+//        walltesting.PowerDropDown();
+       //assertEquals(25, a.getPlayerFace());
+    }
+
+
 
     /**
      * get total number of brick Count

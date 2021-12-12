@@ -11,7 +11,7 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    private PlayerController playertesting;
+    public PlayerController playertesting;
 
     public PlayerTest() {
         playertesting = new PlayerController(new Point(10,10), 10, 10, new Rectangle(0,0,100,20));
@@ -70,7 +70,6 @@ class PlayerTest {
         Point P = new Point(20,20);
         playertesting.moveTo(P);
         assertEquals(new Point(20,20), P);
-
     }
 
 }

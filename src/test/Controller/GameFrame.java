@@ -15,14 +15,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.Controller;
+
+import test.GameBoard;
+import test.View.HomeMenu;
+import test.View.Instruction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowListener;
 
 
 public class GameFrame extends JFrame implements WindowFocusListener {
@@ -63,6 +65,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setVisible(true);
     }
 
+    /**
+     * Enable game board to display and remove other page
+     */
     public void enableGameBoard(){
         this.dispose();
         this.remove(homeMenu);
@@ -75,17 +80,23 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.addWindowFocusListener(this);
 
     }
-    public void enableInstruction(){ //add instruction
+
+    /**
+     * Jump into the instruction page
+     */
+    public void enableInstruction(){
         this.dispose();
         this.remove(homeMenu);
         this.add(instruction,BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();
-        /*to avoid problems with graphics focus controller is added here*/
+        //to avoid problems with graphics focus controller is added here
         this.addWindowFocusListener(this);
-
     }
 
+    /**
+     * Jump into the home menu page
+     */
     public void enableHomeMenu(){ //add instruction
         this.dispose();
         this.remove(instruction);
@@ -107,6 +118,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
 
+    /**
+     * @param windowEvent window screen event
+     */
     @Override
     public void windowGainedFocus(WindowEvent windowEvent) {
         /*
@@ -120,6 +134,10 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         gaming = true;
     }
 
+    /**
+     * @param windowEvent window screen event
+     * When lost focus, the game timer is paused
+     */
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
         if(gaming)

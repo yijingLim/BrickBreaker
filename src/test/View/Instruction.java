@@ -1,13 +1,12 @@
-package test;
+package test.View;
+
+import test.Controller.GameFrame;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
 
 //new instruction class
 public class Instruction extends JComponent implements MouseListener, MouseMotionListener {

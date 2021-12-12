@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.View;
+
+import test.Controller.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,9 +48,8 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     private Rectangle menuFace;
     private Rectangle startButton;
-    private Rectangle exitButton; //change all the menu button to exit button
+    private Rectangle exitButton;
     private Rectangle instructionButton;
-
 
     private BasicStroke borderStoke;
     private BasicStroke borderStoke_noDashes;
@@ -64,7 +65,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private boolean exitClicked;
     private boolean InstructionClicked;
 
-
     public HomeMenu(GameFrame owner,Dimension area){
 
         this.setFocusable(true);
@@ -75,16 +75,13 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
         this.owner = owner;
 
-
-
         menuFace = new Rectangle(new Point(0,0),area);
         this.setPreferredSize(area);
 
         Dimension btnDim = new Dimension(area.width / 3, area.height / 12);
         startButton = new Rectangle(btnDim);
         instructionButton = new Rectangle(btnDim);
-        exitButton = new Rectangle(btnDim);//change to exit button
-
+        exitButton = new Rectangle(btnDim);
 
         borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0);
         borderStoke_noDashes = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
@@ -93,9 +90,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         gameTitleFont = new Font("Noto Mono",Font.BOLD,40);
         creditsFont = new Font("Monospaced",Font.PLAIN,10);
         buttonFont = new Font("Monospaced",Font.PLAIN,startButton.height-2);
-
     }
-
 
     public void paint(Graphics g){
         drawMenu((Graphics2D)g);
@@ -105,7 +100,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     public void drawMenu(Graphics2D g2d){
 
         drawContainer(g2d);
-
         /*
         all the following method calls need a relative
         painting directly into the HomeMenu rectangle,
@@ -119,10 +113,8 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
         g2d.translate(x,y);
 
-        //methods calls
         drawText(g2d);
         drawButton(g2d);
-        //end of methods calls
 
         g2d.translate(-x,-y);
         g2d.setFont(prevFont);
@@ -169,7 +161,8 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         g2d.drawString(GREETINGS,sX,sY);
 
         sX = (int)(menuFace.getWidth() - gameTitleRect.getWidth()) / 2;
-        sY += (int) gameTitleRect.getHeight() * 1.1;//add 10% of String height between the two strings
+        sY += (int) gameTitleRect.getHeight() * 1.1;
+        //add 10% of String height between the two strings
 
         g2d.setFont(gameTitleFont);
         g2d.drawString(GAME_TITLE,sX,sY);
@@ -179,7 +172,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
         g2d.setFont(creditsFont);
         g2d.drawString(CREDITS,sX,sY);
-
 
     }
 
