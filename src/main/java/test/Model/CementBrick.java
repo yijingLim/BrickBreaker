@@ -7,6 +7,10 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
 
+/**
+ * CementBrick class is inheritance class of Brick controller class
+ * To create a cement brick class type
+ */
 public class CementBrick extends BrickController {
 
 
@@ -39,6 +43,11 @@ public class CementBrick extends BrickController {
         return new Rectangle(pos,size);
     }
 
+    /**
+     * @param point Coordinate of x and y to be impacted
+     * @param dir direction of impact
+     * @return true if ball is impacted and false if ball is already broken
+     */
     @Override
     public boolean setImpact(Point2D point, int dir) {
         if(super.isBroken())

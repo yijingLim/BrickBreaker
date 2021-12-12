@@ -8,7 +8,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-//new instruction class
+/**
+ * Instruction class to display guideline of games
+ */
 public class Instruction extends JComponent implements MouseListener, MouseMotionListener {
 
     private static final String BACK_TEXT = "Back";
@@ -64,6 +66,9 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
 
     }
 
+    /**
+     * Set background of the instruction page
+     */
     private void setbackground(Graphics2D g2d){
         Color tmp = g2d.getColor();
         g2d.setColor(BG_COLOR);
@@ -72,7 +77,9 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
     }
 
 
-
+    /**
+     * Write and display the text on the instruction page
+     */
     public void drawText(Graphics2D g2d){
 
         g2d.setFont(instructionFont);
@@ -84,6 +91,7 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
         drawString(g2d, "Welcome to the game !\nPRESS A & D to move left & right\nPRESS SPACE to Pause the game", 80, 100);
 
     }
+
     private void drawString(Graphics g, String text, int x, int y) {
         int lineHeight = g.getFontMetrics().getHeight();
         for (String line : text.split("\n"))
@@ -91,6 +99,9 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
     }
 
 
+    /**
+     * Draw the start and back button on instruction page
+     */
     public void drawButton(Graphics2D g2d){
 
         Dimension btnDim = new Dimension(DEF_WIDTH/5, DEF_HEIGHT / 10);
@@ -131,6 +142,9 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
 
     }
 
+    /**
+     * When mouse is click, the respective page is enabled to display
+     */
         @Override
     public void mouseClicked(MouseEvent e) {
             Point p = e.getPoint();
@@ -144,6 +158,9 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
     }
 
 
+    /**
+     * When mouse is pressed, the repaint the button when it is clicked
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         Point p = e.getPoint();
@@ -159,8 +176,6 @@ public class Instruction extends JComponent implements MouseListener, MouseMotio
         }
 
     }
-
-
     @Override
     public void mouseReleased(MouseEvent e) {
             if(startClicked ){

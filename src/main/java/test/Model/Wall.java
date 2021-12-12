@@ -26,6 +26,9 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 
 
+/**
+ * Wall Class that consists of main interaction of the game
+ */
 public class Wall {
 
     private static final int LEVELS_COUNT = 5;
@@ -61,6 +64,14 @@ public class Wall {
     private boolean ballLost;
 
 
+    /**
+     * Constructor of Wall class
+     * @param drawArea Area of the wall
+     * @param brickCount the number of brick in the wall
+     * @param lineCount the number of line in the wall
+     * @param brickDimensionRatio
+     * @param ballPos Coordinate x and y
+     */
     public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos) {
 
         this.startPoint = new Point(ballPos);
@@ -92,7 +103,7 @@ public class Wall {
 
     /**
      * @param ballPos ball initial position
-     *                makeBall class to create a ball
+     * makeBall class to create a ball
      */
 
     private void makeBall(Point2D ballPos) {
@@ -103,7 +114,7 @@ public class Wall {
      * Makelevels is to create different level with different brick arrangement
      *  @param brickCount total number of brick in the level
      * @param lineCount  the total line consist of brick
-     * @return
+     * @return the level of brickcontroller
      */
     private BrickController[][] makeLevels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio) {
         BrickController[][] tmp = new BrickController[LEVELS_COUNT][];
@@ -116,6 +127,9 @@ public class Wall {
     }
 
 
+    /**
+     * Method
+     */
     public void move() {
         player.move();
         ball.move();
@@ -155,7 +169,6 @@ public class Wall {
                             Score +=40;
                             break;
                     }
-
 
                     System.out.println("My Total Score :" + Score);
 
@@ -291,7 +304,8 @@ public class Wall {
 
 
     /**
-     * @return
+     * Method to check if ball impact wall
+     * @return true when it impact in all different direction
      */
     public boolean impactWall() {
         for (BrickController b : bricks) {
@@ -300,7 +314,7 @@ public class Wall {
                 case UP_IMPACT:
                     ball.reverseY();
                     this.Strength = b.getFullStrength();
-                    return b.setImpact(ball.getDown(), Crack.UP);//Brick.Crack.UP/down/left right
+                    return b.setImpact(ball.getDown(), Crack.UP);
                 case DOWN_IMPACT:
                     ball.reverseY();
                     this.Strength = b.getFullStrength();
@@ -322,7 +336,7 @@ public class Wall {
 
     /**
      * Check if extra ball impacted the wall
-     * @return true when impacted the bricks
+     * @return true when impacted the bricks in all direction
      */
     public boolean impactWall1() {
             if (this.extraball != null) {
@@ -351,6 +365,7 @@ public class Wall {
     }
 
     /**
+     * Method to check impact border by normal ball
      * @return true when rubber ball impact the border
      */
     private boolean impactBorder() {
@@ -359,7 +374,7 @@ public class Wall {
     }
 
     /**
-     *
+     * Method to check impact border by extra ball
      * @return true when extra rubber ball impact the border
      */
     private boolean impactBorder1() {
@@ -367,17 +382,25 @@ public class Wall {
             return ((x.getX() < area.getX()) || (x.getX() > (area.getX() + area.getWidth())));
     }
 
+    /**
+     * Method to get the number of brick count
+     * @return the number of brick
+     */
     public int getBrickCount() {
         return brickCount;
     }
 
+    /** Method to get the number of ball count
+     * @return the number of ball
+     */
     public int getBallCount() {
         return ballCount;
     }
 
 
     /**
-     * @return bonus score when game is over when ballcount is not null
+     * Method is used to add bonus score to the total score
+     * @return bonus score when game is over when ball count is not null
      */
     public int getBallExtraPoint(){
         if(getBallCount()==3){
@@ -392,22 +415,26 @@ public class Wall {
         return Bonus;
     }
 
+    /**
+     * Method to check if ball is lost
+     * @return true when ball is lost
+     */
     public boolean isBallLost() {
         return ballLost;
     }
 
     /**
-     *
+     * Method to reset the ball speed to its initial ball speed
      */
     public void ballReset() {
         player.moveTo(startPoint);
         ball.moveTo(startPoint);
         int speedX, speedY;
         do {
-            speedX = rnd.nextInt(5) - 2;
+            speedX = 5;
         } while (speedX == 0);
         do {
-            speedY = -rnd.nextInt(3);
+            speedY = -5;
         } while (speedY == 0);
         ball.setXSpeed(speedX);
         ball.setYSpeed(speedY);
@@ -415,6 +442,9 @@ public class Wall {
         ballLost = false;
     }
 
+    /**
+     * Method to reset the brick on the wall and the number of ball per game
+     */
     public void wallReset() {
         for (BrickController b : bricks)
             b.repair();
@@ -422,23 +452,42 @@ public class Wall {
         ballCount = 3;
     }
 
+    /**
+     * Method to reset the size of playerface
+     * @return the initial player face width
+     */
     public int resetPlayer(){
         return player.playerFace.width = 150;
     }
 
+    /**
+     * Method to check if ball ended
+     * @return true when no ball is left
+     */
     public boolean ballEnd() {
         return ballCount == 0;
     }
 
+    /**
+     * Method to check if level is done
+     * @return true when all brick is impacted
+     */
     public boolean isDone() {
         return brickCount == 0;
     }
 
+    /**
+     * Method to proceed to next level
+     */
     public void nextLevel() {
         bricks = levels[level++];
         this.brickCount = bricks.length;
     }
 
+    /**
+     * Method to check if there is new level
+     * @return true is there is more level
+     */
     public boolean hasLevel() {
         return level < levels.length;
     }
@@ -460,14 +509,6 @@ public class Wall {
 
     public void resetBallCount() {
         ballCount = 3;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
     }
 
     /**

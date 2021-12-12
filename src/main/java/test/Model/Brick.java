@@ -30,6 +30,7 @@ public class Brick {
     private boolean broken;
 
     /**
+     * Constructor of brick class
      * @param name the name of the brick
      * @param pos the coordinate x and y of brick
      * @param size size of the brick

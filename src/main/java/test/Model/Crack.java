@@ -135,6 +135,11 @@ public class Crack{
         crack.append(path,true);
     }
 
+    /**
+     * Get random bound
+     * @param bound a bound value to be randomised
+     * @return a random number
+     */
     private int randomInBounds(int bound){
         int n = (bound * 2) + 1;
         return rnd.nextInt(n) - bound;
@@ -155,6 +160,13 @@ public class Crack{
 
     }
 
+    /**
+     * Make randomm point crack
+     * @param from the position of random crack starts
+     * @param to the position of random crack ends
+     * @param direction the direction of crack
+     * @return the crack location in (x,y) coordinate
+     */
     private Point makeRandomPoint(Point from,Point to, int direction){
 
         Point out = new Point();

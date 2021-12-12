@@ -36,10 +36,10 @@ public class Player {
 
     /**
      * Constructor of player
-     *  @param ballPoint
-     * @param width
-     * @param height
-     * @param container
+     *  @param ballPoint Coordinate of Ball point x and y
+     * @param width width of player
+     * @param height height of player
+     * @param container size of player
      */
     public Player(Point ballPoint, int width, int height, Rectangle container) {
         this.ballPoint = ballPoint;

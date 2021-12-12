@@ -95,6 +95,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     private boolean ClearLeaderboard = false;
 
 
+    /**
+     * The constructor of gameboard class for user to play game
+     * @param owner Owner of the system
+     */
     public GameBoard(GameFrame owner){
 
         super();
@@ -188,7 +192,7 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     }
 
     /**
-     * I
+     * Method to initialize the window function
      */
     private void initialize(){
         this.setPreferredSize(new Dimension(DEF_WIDTH,DEF_HEIGHT));
@@ -200,6 +204,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     }
 
 
+    /**
+     * Method is called when display of object is needed
+     * @param g Graphics of the object
+     */
     public void paint(Graphics g){
 
         Graphics2D g2d = (Graphics2D) g;
@@ -236,6 +244,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         Toolkit.getDefaultToolkit().sync();
     }
 
+    /**
+     * Method to set the background back to white again
+     * @param g2d Graphics2D of object
+     */
     private void clear(Graphics2D g2d){
         Color tmp = g2d.getColor();
         g2d.setColor(BG_COLOR);
@@ -244,6 +256,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     }
 
 
+    /**
+     * Method to draw the level bar on the gameboard
+     * @param g2d Graphic2D of level bar
+     */
     private void drawLevelBar(Graphics2D g2d){//putting game board on the below of the page
 
         g2d.setColor(Color.blue);
@@ -262,6 +278,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         drawPauseButton(g2d);
 
     }
+
+    /**
+     * Method to draw and display pause button
+     */
     private void drawPauseButton(Graphics2D g2d){
         Dimension btnDim = new Dimension(DEF_WIDTH/6, DEF_HEIGHT/13);
         PauseButton = new Rectangle(btnDim);
@@ -283,11 +303,18 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     }
 
+    /**
+     * Method to draw the menu
+     * @param g2d Graphics2D
+     */
     private void drawMenu(Graphics2D g2d){
         obscureGameBoard(g2d);
         drawPauseMenu(g2d);
     }
 
+    /**
+     * Method to control the background and transparency of pause menu
+     */
     private void obscureGameBoard(Graphics2D g2d){
 
         Composite tmp = g2d.getComposite();
@@ -303,6 +330,11 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         g2d.setColor(tmpColor);
     }
 
+    /**
+     * Method to draw the pause menu and the functionalities button on the menu
+     * Continue button, restart button, exit button and main menu button is drawn
+     * @param g2d Graphics2D
+     */
     private void drawPauseMenu(Graphics2D g2d){
         Font tmpFont = g2d.getFont();
         Color tmpColor = g2d.getColor();
@@ -422,6 +454,9 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         }
     }
 
+    /**
+     * Method to draw leaderboardBoard of the highscore obtained
+     */
     private void drawLeaderboardBoard(Graphics2D g2d){
         setLeaderBoardBackground(g2d);
 
@@ -447,15 +482,28 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
         g2d.drawString("Press SpaceBar to Restart the game !! ", 40, FIRSTPLACE_HEIGHT+200);
     }
+
+    /**
+     * @param Place Position of the score by user
+     * @return the Name of user in the specific position
+     */
     private String SplitgetName(String Place){
         String Name = Place.split(",")[1];
         return Name;
     }
+
+    /**
+     * @param Place Position of the score by user
+     * @return the score obtained by the user in the specific position
+     */
     private String SplitgetScore(String Place){
         String Score = Place.split(",")[0];
         return Score;
     }
 
+    /**
+     * Set the leaderboard background colour
+     */
     private void setLeaderBoardBackground(Graphics2D g2d){
         Color tmp = g2d.getColor();
         g2d.setColor(LEADERBOARDBG_COLOR);
@@ -467,6 +515,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
     public void keyTyped(KeyEvent keyEvent) {
     }
 
+    /**
+     * Method to show action when a certain key is pressed
+     * @param keyEvent the type of key pressed by user
+     */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         switch(keyEvent.getKeyCode()){
@@ -496,11 +548,17 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         }
     }
 
+    /**
+     * When key is released the player movement stopped
+     */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         wall.player.stop();
     }
 
+    /**
+     * Method when mouse is clicked, action taken place
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -534,6 +592,10 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
 
     }
 
+    /**
+     * Method when pause button is pressed, action taken placed
+     * @param mouseEvent mouse action
+     */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -583,6 +645,9 @@ public class GameBoard<scores> extends JComponent implements KeyListener,MouseLi
         }
     }
 
+    /**
+     * Method to show when game lost focus
+     */
     public void onLostFocus(){
         gameTimer.stop();
         message = "Focus Lost";

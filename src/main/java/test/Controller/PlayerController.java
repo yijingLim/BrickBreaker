@@ -48,7 +48,6 @@ public class PlayerController {
         this.height = height;
     }
 
-
     /**
      * @param width width of player face
      * @param height height of the playerface
