@@ -1,14 +1,18 @@
 # BrickBreaker
-###### Name : Lim Yi Jing
-###### OWA : hcyyl9
+##### Name : Lim Yi Jing
+##### OWA : hcyyl9
 
-## How To Use
-
+## Content Page
+#### 1. Refactoring
+#### 2. Addition
+#### 3. Documentation
+#### 4. Git Used
 
 ## Refactoring
 Organised the content of the codes into different package and rename the neccessary classes
 - Implementation of MVC Design Pattern
   -  Brick, Player and ball class are arrange and separate into Model, Controller and View classes
+  -  For example, brick class is the model class, brickView class is the view and BrickController is the controller class
   -  Other classes are arrange into  the package according to the functionalities
 - Basic Maintainance
   - Larger classes are broken down by extracting the subclass
@@ -17,15 +21,21 @@ Organised the content of the codes into different package and rename the neccess
   - Remove uneccessary classes
     - SetSpeed is removed as setSpeedX and setSpeedY is sufficient
     - RadiusA and radiusB is converted to radius only as the radius of ball is the same
-  - Junit testing
-  - Build Files (Maven) is added
+  - Factory Method Design
+     - Brick Factory is created using a getbricktype method. When a new brick class is created, it will refer to brickfactory class to get the type
+  - Enumerator special class called ImpactedDirection is created
+     -  This enum class is used in brickcontroller class that help to store the constant direction of the brick 
+- Junit testing on some classes
+   - Classes that has been tested are ball, brick, player, sorthighscore and wall class in the Test folder
+   - For example, to test the functionality of impact in wall class
+- Build Files (Maven) is added
  
 
 ## Addition
  - Instruction Page
     - An instruction page is introduce from the home menu to give guidelines on how to play the game. 
     - An intruction button is added in the home menu page. 
-    - The instruction menu consists of start button that can set user to start playing the ggame
+    - The instruction menu consists of start button that can set user to start playing the game
  - A Level bar on the game
     - To display the levels, remaining brick and ball count is located as the bottom of the wall for easy user interface for user.
  - A Pause button is introduced to the system and hence the user able to access to pause menu using both escape key and button.
@@ -45,9 +55,12 @@ Organised the content of the codes into different package and rename the neccess
 
 ## Documentation
  - Javadocs is added into the codes by commenting the method and classes 
+ - Class Diagram is drawn to visuallise the entire project
 
 ## Git Used
-
+- Git is a version control system help to track and save the changes along the project
+- Commit history is used to track the old commits
+- Meaningful commit messages are used to track the commits made
 
 
 
