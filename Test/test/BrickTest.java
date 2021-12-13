@@ -42,6 +42,9 @@ class BrickTest {
         return null;
     }
 
+    /**
+     * Test if brick is impacted
+     */
     @Test
     void setImpact() {
         BrickController brick1 = new ClayBrick(new Point(100, 100), new Dimension(100,100));
@@ -49,6 +52,9 @@ class BrickTest {
         assertTrue(brick1.isBroken());
     }
 
+    /**
+     * Test if ball is impacted at all direction
+     */
     @Test
     void findImpact() {
         BallController ball = new RubberBall(new Point(100, 100));
@@ -59,11 +65,17 @@ class BrickTest {
     }
 
 
+    /**
+     * Test if Brick is broken
+     */
     @Test
     void isBroken() {
         assertFalse(bricktesting.isBroken());
     }
 
+    /**
+     * Test if brick is repaired
+     */
     @Test
     void repair() {
         bricktesting.repair();
@@ -71,6 +83,9 @@ class BrickTest {
         assertFalse(bricktesting.isBroken());
     }
 
+    /**
+     * Test if brick is impact
+     */
     @Test
     void impact() {
        bricktesting.setStrength(3);
@@ -79,6 +94,9 @@ class BrickTest {
        assertTrue(!bricktesting.isBroken());
     }
 
+    /**
+     * Get initial strength of brick
+     */
     @Test
     void getFullStrength() {
         assertEquals(1,bricktesting.getFullStrength());

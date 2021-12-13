@@ -89,17 +89,6 @@ class WallTest {
         assertEquals(5,b.getSpeedX());
     }
 
-    @Test
-    void powerDropDownExpandPlayer() {
-//        Powerup p = new Powerup(10, 10, 1);
-//        walltesting.setType(1);
-//        a.impactPower(p);
-//        walltesting.PowerDropDown();
-       //assertEquals(25, a.getPlayerFace());
-    }
-
-
-
     /**
      * get total number of brick Count
      */

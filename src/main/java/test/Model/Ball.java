@@ -65,14 +65,25 @@ public class Ball {
         speedY = s;
     }
 
+    /**
+     * Method to get the border color
+     * @return border color
+     */
     public Color getBorderColor(){
         return border;
     }
 
+    /**
+     * Method to get the inner color of brick
+     * @return inner fill of ball
+     */
     public Color getInnerColor(){
         return inner;
     }
 
+    /**
+     * @return the position of the ball
+     */
     public Point2D getPosition(){
         return center;
     }

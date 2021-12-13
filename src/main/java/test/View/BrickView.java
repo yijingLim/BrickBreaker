@@ -8,6 +8,11 @@ public class BrickView {
     public BrickView() {
     }
 
+    /**
+     * Method call to draw the brick on game
+     * @param brick Brick created
+     * @param g2d Graphics of object
+     */
     public void drawBrick(BrickController brick, Graphics2D g2d){
         Color tmp = g2d.getColor();
 

@@ -1,1 +1,1 @@
-100,kk 70,kl 50,yyy
+110,john 80,null 70,null

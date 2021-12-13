@@ -128,7 +128,7 @@ public class Wall {
 
 
     /**
-     * Method
+     * Method that initiates the player,ball and extra ball to move when game start
      */
     public void move() {
         player.move();

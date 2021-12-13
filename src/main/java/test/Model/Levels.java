@@ -10,7 +10,6 @@ public class Levels {
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
     private static final int TITANUM = 4;
-    //private int type;
 
     /**
      * @param drawArea the size of brick level

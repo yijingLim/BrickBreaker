@@ -26,6 +26,10 @@ class BallTest {
             }
         };
     }
+
+    /**
+     * Test if ball reverse its horizontal directions of coordinate x
+     */
     @Test
     void reverseX() {
         BallTesting.setXSpeed(1);
@@ -33,6 +37,10 @@ class BallTest {
 
         assertEquals(-1, BallTesting.getSpeedX());
     }
+
+    /**
+     * Test if ball reverse its vertical direction of coordinate y
+     */
     @Test
     void reverseY() {
         BallTesting.setYSpeed(1);
@@ -41,6 +49,9 @@ class BallTest {
         assertEquals(-1, BallTesting.getSpeedY());
     }
 
+    /**
+     * Test if ball move with a specific speed, the new location is meet
+     */
     @Test
     void move() {
         Point2D location = new Point(50,50);
@@ -51,6 +62,10 @@ class BallTest {
         b.move();
         assertEquals(new Point(55,55), b.getPosition()); // Position = point + speed
     }
+
+    /**
+     * Method to test if ball is move to the new point (x,y)
+     */
     @Test
     void moveTo() {
         Point location = new Point(50,50);
@@ -62,6 +77,9 @@ class BallTest {
     }
 
 
+    /**
+     * Method to test if ball face is get
+     */
     @Test
     void getBallFace() {
         Shape expectedBallFace = BallTesting.makeBall(location,10);
